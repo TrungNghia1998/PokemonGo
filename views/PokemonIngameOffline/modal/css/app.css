@@ -1,0 +1,40 @@
+#errordot{
+    height: 500px;
+    width: 500px;
+    border-radius: 50%;
+    border: 5px solid black;
+    margin: auto;
+    -webkit-animation: rotateY 100s ;
+    animation: rotateY 100s ;
+    background-image: url("https://cdn.dribbble.com/users/67719/screenshots/2840546/pokestoplogo.jpg");
+    background-position: center;
+}
+#errorsun{
+    height: 500px;
+    width: 500px;
+    border-radius: 50%;
+    border: 5px solid black;
+    margin: auto;
+    -webkit-animation: rotateY 1s ;
+    animation: rotateY 1s ;
+    background-image: url("https://cdn.dribbble.com/users/67719/screenshots/2840546/pokestoplogo.jpg");
+    background-position: center;
+}
+.rotateY {
+    -webkit-animation-iteration-count:10s;
+    -webkit-animation-timing-function:10s;
+    -webkit-animation-name:rotateY;
+    -webkit-animation-duration:3s;
+}
+.paused {
+  animation-play-state: paused;
+  -webkit-animation-play-state: paused;
+  animation: paused;
+  -webkit-animation: paused;
+}
+@-webkit-keyframes rotateY {
+    to { -webkit-transform: rotateY(360deg); }
+  }
+  @keyframes rotateY {
+    to { transform: rotateY(360deg); }
+  }

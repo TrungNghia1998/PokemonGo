@@ -1,0 +1,148 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/catalogAds.css')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js')
+  body
+    #section1.col-sm-12.bg-success
+      #panel.col-sm-2
+        h1 Vị trí đặt quảng cáo
+      .col-sm-8
+        #banggia.row
+          a.btn.btn-danger.btn-block(href='#section2') Xem bảng giá quảng cáo Ingame
+          a.btn.btn-info.btn-block.mt-2(href='#section3') Liên hệ ngay!!!
+          h1 BẢNG GIÁ QUẢNG CÁO TRÊN TRANG CHỦ VÀ TÀI KHOẢN
+          table.table.table-image
+            thead
+              tr
+                th(scope='col') Tên vị trí
+                th(scope='col') Trang đặt
+                th(scope='col') Thời gian
+                th(scope='col') Số tiền
+            tbody
+              tr
+                th(scope='row') Panel
+                td Trang chủ
+                td 1 tuần
+                td 500$
+              tr
+                th(scope='row') Panel
+                td Trang chủ
+                td 1 tháng
+                td 1500$
+              tr
+                th(scope='row') Panel
+                td Trang cá nhân
+                td 1 tuần
+                td 500$
+              tr
+                th(scope='row') Panel
+                td Trang cá nhân
+                td 1 tuần
+                td 1500$
+        .col-sm-12
+          img#imgTrangChu(src='/images/Demo.png')
+      #panel.col-sm-2
+        h1 Vị trí đặt quảng cáo
+    #section2.col-sm-12.bg-danger
+      .col-sm-2
+      #banggia1.col-sm-8
+        #imgPokestop.row
+          img#imgTrangChu1(src='/images/PokeStop.png')
+        .row
+          h1 BẢNG GIÁ QUẢNG CÁO TRONG GAME (POKÉSTOP)
+          table.table.table-image
+            thead
+              tr
+                th(scope='col') Tên vị trí
+                th(scope='col') Trang đặt
+                th(scope='col') Thời gian
+                th(scope='col') Số tiền
+            tbody
+              tr
+                th(scope='row') Pokéstop background
+                td Pokéstop
+                td 1 tuần
+                td 600$
+              tr
+                th(scope='row') Pokéstop background
+                td Pokéstop
+                td 1 tháng
+                td 1900$
+          a.btn.btn-success.btn-block.mb-3.mt-2(href='#section1') Xem bảng giá quảng cáo trên trang chủ và tài khoản
+          a.btn.btn-info.btn-block.mt-2(href='#section3') Liên hệ ngay!!!
+      .col-sm-2
+    #section3.col-sm-12.bg-info
+      .col-sm-2
+      .col-sm-8
+        #banggia.row
+          h1
+            span.badge.badge-secondary.badge-block
+              h5 LIÊN HỆ QUẢNG CÁO
+          form(action='')
+            .form-group
+              label(for='uname') Họ Tên:
+              input.form-control(type='text', placeholder='Xin hãy điền họ tên', name='name', required='')
+            .form-group
+              label(for='uname') Email:
+              input.form-control(type='text', placeholder='email@example.com', name='email', required='')
+            .form-group
+              label(for='uname') Số điện thoại:
+              input.form-control(type='text', placeholder='Xin hãy điền vào số điện thoại', name='phone', required='')
+            .form-group
+              label(for='uname') Doanh Nghiệp:
+              input.form-control(type='text', placeholder='Xin hãy điền vào tên doanh nghiệp', name='company', required='')
+            .form-group
+              label(for='uname') Nội dung:
+              input.form-control(type='text', placeholder='Xin hãy điền vào vị trí muốn đặt quảng cáo và thời gian đặt', name='content', required='')
+            button#submitEmail.btn.btn-primary.btn-block(type='button') Xác nhận
+          br
+          a.btn.btn-success.btn-block.mb-3(href='#section1') Xem bảng giá quảng cáo trên trang chủ và tài khoản
+          a.btn.btn-danger.btn-block(href='#section2') Xem bảng giá quảng cáo Ingame
+        .col-sm-2
+      script.
+        $(`#submitEmail`).click(()=>{
+        let name = $(`input[name=name]`).val();
+        let email = $(`input[name=email]`).val();
+        let sdt = $(`input[name=phone]`).val();
+        let company = $(`input[name=company]`).val();
+        let content = $(`input[name=content]`).val();
+        let key = "b2dfff7c594e7b0820cf1e33127eb041-us20"
+        $.ajax({
+        type: "POST",
+        url: "https://mandrillapp.com/api/1.0/messages/send.json",
+        data: {
+        "key": key,
+        "message": {
+        "from_email": email,
+        "to": [
+        {
+        "email": "nguyenduypoon@gmail.com",
+        "name": "Poon Nguyen",
+        "type": "to"
+        },
+        {
+        "email": "tranvietbao11@gmail.com",
+        "name": "Bao Cho",
+        "type": "to"
+        }
+        ],
+        "autotext": null,
+        "subject": "Lien he quang cao - Pokebiz",
+        "text": 	`Ten: ${name}
+        Email: ${email}
+        SDT: ${sdt}
+        Company: ${company}
+        Noi dung: ${content}`
+        }
+        }
+        }).done(function(response) {
+        console.log(response); // if you're into that sorta thing
+        });
+        });

@@ -1,0 +1,73 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  meta(http-equiv='X-UA-Compatible' content='ie=edge')
+  link(rel='stylesheet' href='../../stylesheets/css_hoang/login.css')
+  script(src='https://code.jquery.com/jquery-3.3.1.js')
+  link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css', integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm', crossorigin='anonymous')
+  link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.css')
+  script(src="https://kit.fontawesome.com/3f47eb379d.js")
+  script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', crossorigin='anonymous')
+  script(src="https://code.jquery.com/jquery-3.4.1.js"  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="  crossorigin="anonymous")
+  title=title
+ 
+body 
+  if errors
+    script.
+      alert("#{errors}")
+  .login-reg-panel
+    .login-info-box
+      h3 Đã có tài khoản?
+      p Đăng nhập ngay!
+      label#label-register.btn.btn-dark(for='log-reg-show') Đăng nhập
+      input#log-reg-show(type='radio' name='active-log-panel' checked='checked')
+    .register-info-box
+      h3 Chưa có tài khoản?
+      p Đăng ký ngay!
+      label#label-login.btn.btn-dark(for='log-login-show') Đăng ký
+      input#log-login-show(type='radio' name='active-log-panel')
+
+    .white-panel
+      .login-show
+        .display-4.text-dark Pokébiz
+        p.mb-5.text-dark MiddleField
+        
+        h2.text-dark.text-center ĐĂNG NHẬP
+        form(action='/account/login', method="post")
+          input(type='text' placeholder='Tài khoản' name="username")
+          input(type='password' placeholder='Mật khẩu' name="password")
+          button.btn.btn-dark.float-right(type='submit') Đăng nhập
+          button.btn.btn-outline-dark(type='button') Quên mật khẩu?
+            .null (Comming soon)
+      .register-show
+        .display-4.text-dark Pokébiz
+        p.mb-3.text-dark MiddleField
+        h2.text-dark.text-center ĐĂNG KÝ
+        form(action='/account/create',method="post")
+          input(type='text' placeholder='Tài khoản' name="username")
+          input(type='password' placeholder='Mật khẩu' name="password")
+          input(type='password' placeholder='Mật khẩu xác nhận' name="password_cfm")
+          button.btn.btn-dark.float-right(type='submit') Đăng ký
+
+  script.
+    $(document).ready(function(){
+    $('.login-info-box').fadeOut();
+    $('.login-show').addClass('show-log-panel');
+    });
+    $('.login-reg-panel input[type="radio"]').on('change', function() {
+    if($('#log-login-show').is(':checked')) {
+    $('.register-info-box').fadeOut();
+    $('.login-info-box').fadeIn();
+    $('.white-panel').addClass('right-log');
+    $('.register-show').addClass('show-log-panel');
+    $('.login-show').removeClass('show-log-panel');
+    }
+    else if($('#log-reg-show').is(':checked')) {
+    $('.register-info-box').fadeIn();
+    $('.login-info-box').fadeOut();
+    $('.white-panel').removeClass('right-log');
+    $('.login-show').addClass('show-log-panel');
+    $('.register-show').removeClass('show-log-panel');
+    }
+    });

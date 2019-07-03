@@ -1,0 +1,36 @@
+doctype html
+head
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css')
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+  script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js')
+  link(rel='stylesheet' href='assets/css/character.css')
+.container-fluid
+  .row
+    .col-sm-2
+      img#backicon(src='/public/images/test/backicon.png')
+    .col-sm-8
+      p(style='text-align: center') Tên Nhân Vật
+  // Thiếu 2 button
+  .row
+    .col-sm-4
+    .col-sm-4
+      #character
+        img#team(src='/assets/image/team_valor.jpg')
+        img#main(src='/assets/image/character.png')
+    #icon.col-sm-4
+      .row
+        img#skin(src='/assets/image/skin.png')
+      .row
+        img#edit(src='/assets/image/edit.png')
+  #char_infor.row
+    .col-sm-4
+    #infor.col-sm-4
+      p Level:
+      .exp_bar
+        .exp
+      p 10 / ??? EXP
+      p Start day: 24/03/2019
+    .col-sm-4
+footer

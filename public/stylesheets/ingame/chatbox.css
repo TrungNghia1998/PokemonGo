@@ -1,0 +1,23 @@
+/* #chatbox {
+    /* top: 314%; */
+    /* position: absolute;
+    opacity: 0.5; 
+} */
+/* #chatbox:hover {
+    opacity: 1;
+} */
+.chatbox {
+    position: absolute;
+    height: auto;
+    width: auto;
+}
+#messages {
+    /* background-color:  rgba(0, 255, 167, 0.3);
+    width: 54%;*/
+    height: 90vh; 
+    width: 20vw;
+    overflow-y: auto;
+    opacity: 0.75;
+    /* margin-top: 50%; */
+    /* color: #ff9140; */
+}

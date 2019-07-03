@@ -1,0 +1,64 @@
+.container {
+  padding: 2rem 0rem;
+}
+
+h4 {
+  margin: 2rem 0rem 1rem;
+}
+
+.table-image > td > th {
+  vertical-align: middle;
+}
+#banggia {
+  transform: translate(0%, 7%);
+  padding: 0% 5%;
+}
+
+#banggia1 {
+  /* transform: translate(0%,290%); */
+  padding: 0% 5%;
+}
+
+#panel {
+  text-align: center;
+  color: brown;
+  font-family: "Times New Roman", Times, serif;
+  transform: translate(0%, 10%);
+  height: 550px;
+  background-color: burlywood;
+}
+#imgPokestop {
+  padding-top: 6%;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow: hidden;
+}
+
+#section1 {
+  height: 100vh;
+}
+
+#section2 {
+  height: 100vh;
+}
+#section3 {
+  height: 100vh;
+}
+
+#imgTrangChu {
+  width: 80%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 3%;
+}
+
+#imgTrangChu1 {
+  width: 40%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 3%;
+}

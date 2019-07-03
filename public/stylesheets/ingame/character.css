@@ -1,0 +1,64 @@
+#team {
+    position: absolute;
+    width: 75vh;
+    z-index: 0;
+    padding: inherit;
+    opacity: 0.5;
+    margin-top: -15vh;
+    margin-left: -20vh;
+}
+
+#main {
+    z-index: 3;
+    /* padding: inherit; */
+    /* transform: translate(20%, 10%); */
+    width: 40vh;
+    position: absolute;
+    /* left: 47%; */
+    /* margin-top: 3%; */
+}
+
+.exp {
+    padding: 10px;
+    width: 80%;
+    background-color: #ffc107;
+    -webkit-border-radius: 8px;
+}
+
+.exp_bar {
+    width: 100%;
+    background-color: #ddd;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    border-radius: 10px;
+    border: 2px solid #ffc107   ;
+    z-index: 1;
+}
+
+
+#characterexp {
+    padding-top: 3%;
+}
+
+
+#profileModal .modal-content{
+    background-image: url(https://steamuserimages-a.akamaihd.net/ugc/853855222809273673/CD2E6E5AA573E9DC9A6DA6F99FA557DC817CB78B/);
+    background-repeat: no-repeat;
+    /* background-size: 100% auto; */
+    background-size: cover;
+}
+
+#profileModal .container{
+    position: relative;
+    max-height: 23vh;
+}
+
+#characterlevel{
+    position: absolute;
+    padding-right: 5vh;
+    padding-left: 5vh;
+    bottom: 7vh;
+}
+

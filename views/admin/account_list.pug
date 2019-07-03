@@ -1,0 +1,409 @@
+extends layout
+block content
+  .main-panel
+    .content-wrapper
+      .row
+        .col-md-12.grid-margin
+          .d-flex.justify-content-between.flex-wrap
+            .d-flex.align-items-end.flex-wrap
+              .mr-md-3.mr-xl-5
+                h2 Quản lý tài khoản
+                p.mb-md-0.badge.badge-info
+                  i.icon-md.mdi.mdi-alert-box
+                  |&nbsp; #{msg}
+              .d-flex
+                i.mdi.mdi-home.text-muted.hover-cursor
+                p.text-muted.mb-0.hover-cursor  / Trang chủ / Quản lý / 
+                p.text-primary.mb-0.hover-cursor &nbsp;Tài khoản
+            .d-flex.justify-content-between.align-items-end.flex-wrap
+              button.btn.btn-primary.mt-2.mt-xl-0(data-toggle="modal" data-target="#create") Tạo tài khoản mới
+      //ADMIN         
+      .row
+        .col.grid-margin.stretch-card
+          .card
+            .card-body
+              h4.card-title Danh sách tài khoản quản trị viên
+              .table-responsive.clusterize-scroll
+                table#adminTable.table.table-hover
+                  thead
+                    tr
+                      th #
+                      th Tên tài khoản
+                      th Ngày tạo
+                      th Loại tài khoản
+                      th Trạng thái
+                      th Thao tác
+                  tbody
+                    - var count=1;
+                    each e in account_list 
+                      if e.acctype==true
+                        tr
+                          td #{count}
+                          td #{e.username}
+                          td #{e.createdate_formatted}                
+                          td
+                            label.badge.badge-warning Quản trị viên
+                          if e.status==true
+                            td
+                              label.badge.badge-success Đang hoạt động
+                          else 
+                            td
+                              label.badge.badge-danger Đang bị khóa
+                          td
+                            button.detail.btn.btn-primary.mr-2(data-toggle="modal" data-target="#detail"+e._id)
+                              i.mdi.mdi-information
+                            button#update.btn.btn-warning.mr-2(data-toggle="modal" data-target="#edit"+e._id)
+                              i.mdi.mdi-border-color
+                            if e.status==true
+                              button#lock.btn.btn-danger(data-toggle="modal" data-target="#lock"+e._id)
+                                i.mdi.mdi-lock
+                            else
+                              button#unlock.btn.btn-danger(data-toggle="modal" data-target="#unlock"+e._id)
+                                i.mdi.mdi-lock-open
+                          - count++;
+      //USER
+      .row
+        .col.grid-margin.stretch-card
+          .card
+            .card-body
+              h4.card-title Danh sách tài khoản người dùng
+              .table-responsive.clusterize-scroll
+                table.table.table-hover
+                  thead
+                    tr
+                      th #
+                      th Tên tài khoản
+                      th Ngày tạo
+                      th Loại tài khoản
+                      th Trạng thái
+                      th Thao tác
+                  tbody
+                    -var count =1;
+                    each e in account_list 
+                      if e.acctype==false
+                        tr
+                          td #{count}
+                          td #{e.username}
+                          td #{e.createdate_formatted}                
+                          td
+                            label.badge.badge-primary Người dùng
+                          if e.status==true
+                            td
+                              label.badge.badge-success Đang hoạt động
+                          else 
+                            td
+                              label.badge.badge-danger Đang bị khóa
+                          td
+                            button.btn.btn-primary.mr-2(data-toggle="modal" data-target="#detail"+e._id)
+                              i.mdi.mdi-information
+                            button.btn.btn-warning.mr-2(data-toggle="modal" data-target="#edit"+e._id)
+                              i.mdi.mdi-border-color
+                            if e.status==true
+                              button.btn.btn-danger(data-toggle="modal" data-target="#lock"+e._id)
+                                i.mdi.mdi-lock
+                            else
+                              button.btn.btn-success(data-toggle="modal" data-target="#unlock"+e._id)
+                                i.mdi.mdi-lock-open
+                        -count++;
+                      
+      footer.footer
+        .d-sm-flex.justify-content-center.justify-content-sm-between
+          span.text-muted.text-center.text-sm-left.d-block.d-sm-inline-block
+            | Copyright © 2018 
+            a(href='https://www.urbanui.com/', target='_blank') Urbanui
+            | . All rights reserved.
+          span.float-none.float-sm-right.d-block.mt-1.mt-sm-0.text-center
+            | Hand-crafted & made with 
+            i.mdi.mdi-heart.text-danger
+
+        script(src='/admin/vendor/base/vendor.bundle.base.js')
+        // endinject
+        // Plugin js for this page
+        script(src='/admin/vendor/chart.js/Chart.min.js')
+        script(src='/admin/vendor/datatables.net/jquery.dataTables.js')
+        script(src='/admin/vendor/datatables.net-bs4/dataTables.bootstrap4.js')
+        // End plugin js for this page
+        // inject:js
+        script(src='/admin/js/off-canvas.js')
+        script(src='/admin/js/hoverable-collapse.js')
+        script(src='/admin/js/template.js')
+        // endinject
+        // Custom js for this page
+        script(src='/admin/js/dashboard.js')
+        script(src='/admin/js/data-table.js')
+        script(src='/admin/js/jquery.dataTables.js')
+        script(src='/admin/js/dataTables.bootstrap4.js')
+        // End custom js for this page
+        script(src='/admin/js/account.js')
+        script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js")
+        link(href="https://cdnjs.cloudflare.com/ajax/libs/clusterize.js/0.18.0/clusterize.css" rel="stylesheet")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/clusterize.js/0.18.0/clusterize.js")
+
+
+      // Modal chi tiết tài khoản
+      each e in account_list
+        .modal.fade(id="detail"+e._id, role='dialog')
+          .modal-dialog.modal-lg
+            // Modal content
+            .modal-content
+              .modal-header
+                .display-2.modal-title.text-dark Chi tiết tài khoản
+              .modal-body
+                .row
+                  .col-sm-2
+                    label.badge.badge-primary.display-4 Họ và tên
+                  .col-sm-3
+                    p.text-primary #{e.fullname==undefined?"NULL":e.fullname}
+                  .col-sm-2
+                    label.badge.badge-primary.display-4 Tên nhân vật
+                  .col-sm-3
+                    p.text-primary #{e.characterid==undefined?"NULL":e.characterid.name}
+             
+                .row
+                  .col-sm-2
+                    label.badge.badge-primary.display-4 Email
+                  .col-sm-3
+                    p.text-primary #{e.email==undefined?"NULL":e.email}
+                  .col-sm-2
+                    label.badge.badge-primary.display-4 Cấp độ
+                  .col-sm-3
+                    p.text-primary #{e.characterid==undefined?"NULL":e.characterid.level +" - (EXP: "+ e.characterid.exp+")"}
+
+                .row
+                  .col-sm-2
+                    label.badge.badge-primary.display-4 Số điện thoại
+                  .col-sm-3
+                    p.text-primary #{e.phone==undefined?"NULL":e.phone}
+                  .col-sm-2
+                    label.badge.badge-primary.display-4 Giới tính nhân vật
+                  .col-sm-3
+                    p.text-primary #{e.characterid==undefined?"NULL":e.characterid.gender_formatted}
+                      
+                .row
+                  .col-sm-2
+                    label.badge.badge-primary.display-4 Địa chỉ
+                  .col-sm-3
+                    p.text-primary #{e.address==undefined?"NULL":e.address}
+                  .col-sm-2
+                    label.badge.badge-primary.display-4 Thời hạn VIP
+                  .col-sm-3
+                    p.text-primary #{e.characterid==undefined?"NULL":e.characterid.vip_formatted}
+             
+                .row
+                  .col-sm-2
+                    label.badge.badge-danger.display-4 CASH
+                  .col-sm-3       
+                    p.text-danger #{e.cash}
+                  .col-sm-2
+                    label.badge.badge-danger.display-4 GEM
+                  .col-sm-3
+                    p.text-danger #{e.characterid==undefined?"NULL":e.characterid.gem}
+
+                .row
+                  .col-sm-2
+                    label.badge.badge-success.display-4 Vị trí
+                  .col
+                    if e.characterid != undefined
+                      img(src=`https://maps.googleapis.com/maps/api/staticmap?&zoom=17&size=600x300&maptype=roadmap&markers=color:red%7Clabel:C%7C${e.characterid.xpos},${e.characterid.ypos}&key=AIzaSyDEHnr26FuYpc2KjXhuJ36jrvSbCNC5mAg`)
+                    else
+                      p.text-success NULL
+              .modal-footer
+                button.btn.btn-primary.btn-block(type='button', data-dismiss='modal') Đóng
+
+      //Modal cập nhật tài khoản
+      each e in account_list
+        .modal.fade(id="edit"+e._id, role='dialog')
+          .modal-dialog.modal-lg
+            // Modal content
+            .modal-content
+              .modal-header
+                .display-3.modal-title.text-dark Cập nhật tài khoản
+              .modal-body.card-body
+                form.forms-sample(method="POST", action="/admin/account/"+e._id+"/update")
+                  .row
+                    .col-md.mr-2
+                      .form-group.row
+                        label.col-sm-3.col-form-label.badge.badge-warning Họ và tên
+                        .col-sm-9
+                          input.form-control(type='text', name='fullname', value=e.fullname==undefined?'NULL':e.fullname)
+                    .col-md
+                      .form-group.row
+                        label.col-sm-3.col-form-label.badge.badge-warning Email
+                        .col-sm-9
+                          input.form-control(type='text', name='email', value=e.email==undefined?'NULL':e.email)
+                  .row
+                    .col-md.mr-2
+                      .form-group.row
+                        label.col-sm-3.col-form-label.badge.badge-warning Số điện thoại
+                        .col-sm-9
+                          input.form-control(type='text', name='phone', value=e.phone==undefined?'NULL':e.phone)
+                    .col-md
+                      .form-group.row
+                        label.col-sm-3.col-form-label.badge.badge-warning Địa chỉ
+                        .col-sm-9
+                          input.form-control(type='text',  name='address', value=e.address==undefined?'NULL':e.address)
+                  .row
+                    .col-md.mr-2
+                      .form-group.row
+                        label.col-sm-3.col-form-label.badge.badge-danger Cash
+                        .col-sm-9
+                          input.form-control(type='number',  name='cash', value=e.cash==undefined?'NULL':e.cash)
+                    .col-md
+                      .form-group.row
+                        label.col-sm-3.col-form-label.badge.badge-warning Loại tài khoản
+                        if e.acctype == true
+                          .col-sm-4
+                            .form-check.form-check-warning
+                              label.form-check-label
+                                input.form-check-input(type='radio', name='acctype', value='true', checked)
+                                |                                 Quản trị viên
+                          .col-sm-5
+                            .form-check.form-check-primary
+                              label.form-check-label
+                                input.form-check-input(type='radio', name='acctype', value='false')
+                                |                                 Người dùng
+                        else
+                          .col-sm-4
+                            .form-check.form-check-warning
+                              label.form-check-label
+                                input.form-check-input(type='radio', name='acctype', value='true')
+                                |                                 Quản trị viên
+                          .col-sm-5
+                            .form-check.form-check-primary
+                              label.form-check-label
+                                input.form-check-input(type='radio', name='acctype', value='false', checked)
+                                |                                 Người dùng
+
+                  .row
+                    .col-md.mr-2
+                      .form-group.row
+                        label.col-sm-3.col-form-label.badge.badge-warning Mật khẩu mới
+                        .col-sm-9
+                          input.form-control(type='password', name='password', palaceHolder="poondeptrai")
+                    .col-md
+                      .form-group.row
+                        label.col-sm-3.col-form-label.badge.badge-warning Mật khẩu <br>xác nhận
+                        .col-sm-9
+                          input.form-control(type='password',  name='password_cfm', palaceHolder="poondeptrai")
+
+                  .float-right
+                    button.btn.btn-primary.mr-2(type='submit') Xác nhận
+                    button.btn.btn-danger(type='button', data-dismiss='modal') Đóng
+
+      //Modal lock + unlock tài khoản
+      each e in account_list
+        if e.status == true
+          .modal.fade(id="lock"+e._id, role='dialog')
+            .modal-dialog
+              // Modal content
+              .modal-content
+                .modal-header
+                  .display-3.modal-title.text-dark Khóa tài khoản
+                .modal-body.card-body
+                  h4 Bạn có chắc chắn khóa tài khoản "#{e.username}"?
+                  p Tài khoản này sẽ không thể đăng nhập cho đến khi được mở khóa lại. Hãy chắc chắn bạn muốn làm điều này. 
+                  form.forms-sample(method="POST", action="/admin/account/"+e._id+"/lock")
+                    .float-right
+                      button.btn.btn-danger.mr-2(type='submit') Xác nhận
+                      button.btn.btn-primary(type='button', data-dismiss='modal') Đóng
+        else
+          .modal.fade(id="unlock"+e._id, role='dialog')
+            .modal-dialog
+              // Modal content
+              .modal-content
+                .modal-header
+                  .display-3.modal-title.text-dark Mở khóa tài khoản
+                .modal-body.card-body
+                  h4 Bạn có chắc chắn mở khóa tài khoản "#{e.username}"?
+                  p Tài khoản này sẽ hoạt động bình thường trở lại. Hãy chắc chắn bạn muốn làm điều này. 
+                  form.forms-sample(method="POST", action="/admin/account/"+e._id+"/unlock")
+                    .float-right
+                      button.btn.btn-danger.mr-2(type='submit') Xác nhận
+                      button.btn.btn-primary(type='button', data-dismiss='modal') Đóng
+
+      //Modal tạo tài khoản
+      #create.modal.fade(role='dialog')
+        .modal-dialog.modal-lg
+          // Modal content
+          .modal-content
+            .modal-header
+              .display-3.modal-title.text-dark Tạo tài khoản
+            .modal-body
+              p.text-danger *Trường màu đỏ là bắt buộc
+              form.forms-sample.px-2(method="POST", action="/admin/account/create")
+                .row
+                  .col-md.mr-2
+                    .form-group.row
+                      label.col-sm-3.col-form-label.badge.badge-primary Họ và tên
+                      .col-sm-9
+                        input.form-control(type='text', name='fullname', placeholder="Họ và tên")
+                  .col-md
+                    .form-group.row
+                      label.col-sm-3.col-form-label.badge.badge-primary Email
+                      .col-sm-9
+                        input.form-control(type='email', name='email', placeholder="Email")
+                .row
+                  .col-md.mr-2
+                    .form-group.row
+                      label.col-sm-3.col-form-label.badge.badge-primary Số điện thoại
+                      .col-sm-9
+                        input.form-control(type='text', name='phone', placeholder="Số điện thoại")
+                  .col-md
+                    .form-group.row
+                      label.col-sm-3.col-form-label.badge.badge-primary Địa chỉ
+                      .col-sm-9
+                        input.form-control(type='text',  name='address', placeholder="Địa chỉ")
+                .row
+                  .col-md.mr-2
+                    .form-group.row
+                      label.col-sm-3.col-form-label.badge.badge-primary Cash
+                      .col-sm-9
+                        input.form-control(type='number',  name='cash', placeholder='0',value='0')
+                  .col-md
+                    .form-group.row
+                      label.col-sm-3.col-form-label.badge.badge-danger Loại tài khoản
+                      .col-sm-4
+                        .form-check.form-check-warning
+                          label.form-check-label
+                            input.form-check-input(type='radio', name='acctype', value='true')
+                            |                                 Quản trị viên
+                      .col-sm-5
+                        .form-check.form-check-primary
+                          label.form-check-label
+                            input.form-check-input(type='radio', name='acctype', value='false')
+                            |                                 Người dùng
+                
+                .row
+                  .col-md.mr-2
+                    .form-group.row
+                      label.col-sm-3.col-form-label.badge.badge-danger Tên tài khoản
+                      .col-sm-9
+                        input.form-control(type='text', name='username', placeholder="Tên tài khoản")
+                  .col-md
+                    .form-group.row
+                      label.col-sm-3.col-form-label.badge.badge-danger Trạng thái
+                      .col-sm-4
+                        .form-check.form-check-success
+                          label.form-check-label
+                            input.form-check-input(type='radio', name='status', value='true')
+                            |                                 Đang hoạt động
+                      .col-sm-5
+                        .form-check.form-check-danger
+                          label.form-check-label
+                            input.form-check-input(type='radio', name='status', value='false')
+                            |                                 Đang bị khóa
+                .row
+                  .col-md.mr-2
+                    .form-group.row
+                      label.col-sm-3.col-form-label.badge.badge-danger Mật khẩu
+                      .col-sm-9
+                        input.form-control(type='password', name='password', palaceHolder="poondeptrai")
+                  .col-md
+                    .form-group.row
+                      label.col-sm-3.col-form-label.badge.badge-danger Mật khẩu <br>xác nhận
+                      .col-sm-9
+                        input.form-control(type='password',  name='password_cfm', palaceHolder="poondeptrai")
+
+                .float-right
+                  button.btn.btn-primary.mr-2(type='submit') Xác nhận
+                  button.btn.btn-danger(type='button', data-dismiss='modal') Đóng

@@ -1,0 +1,54 @@
+body {
+
+    background-image: url(/TradePokemon/assets/image/background.png)    ;
+    background-repeat: no-repeat;
+}
+#main {
+    padding-top: 2%;
+}
+
+#imgPokemon {
+    width: 50%;
+}
+
+#pokemon {
+    margin-left: 2%;
+}
+
+#avatarplayer {
+    width: 40%;
+}
+
+#backicon {
+    width: 20%;
+}
+
+#body {
+    background-image: url(/assets/image/background.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.rectangle {
+    height: 80px;
+    width: 150px;
+    background-color: rgb(255, 254, 254);
+}
+
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 25px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;    
+}
+#confirm{
+    padding-top:4%; 
+    text-align: center;
+}
+#arrow{
+    padding-top:9%;
+}

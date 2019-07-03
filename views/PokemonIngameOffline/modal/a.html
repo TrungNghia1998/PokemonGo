@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/style.css">
+
+<body>
+  <div id="map"></div>
+  <style>
+    #map {
+      height: 90%;
+      width: 100%;
+    }
+  </style>
+  <script>
+    function initAutocomplete() {
+      var myLatLng = { lat: 30.900965, lng: 75.857276 };
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 12,
+        center: myLatLng
+      });
+      var marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+        title: 'Hello World!'
+      });
+      var infowindow = new google.maps.InfoWindow();
+      /*Google Map Marker Click Function*/
+      google.maps.event.addListener(marker, 'click', (function (marker) {
+        return function () {
+          /*Bootstrap Modal Pop Up Open Code*/
+
+          $("#myModal").modal('show');
+        }
+      })(marker));
+    }
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3NCh3AK7mdJXpSMRZvsRr17Ne9ix2Hn0&libraries=
+places&callback=initAutocomplete" async defer></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog" style="width:100%;height: 90%;">
+      <!-- Modal content-->
+      <div class="modal-content" style="">
+       
+        <div class="modal-body">
+          <section id="wrapper">
+
+
+        </div>
+        <div id="touch-layer"></div>
+        <div id="particles"></div>
+        <div id="ring-screen">
+          <div id="ring">
+            <div id="ring-active">
+              <div id="ring-fill"></div>
+            </div>
+          </div>
+        </div>
+        <div id="screen" class="gradient-background">
+          <div id="target-container">
+            <div id="target"></div>
+          </div>
+          <div id="ball"></div>
+
+        </div>
+
+
+        <div id="capture-screen" class="gradient-background hidden">
+          <div id="capture-status" class="hidden">
+            
+          </div>
+          <div id="poof-container" class="hidden">
+            <div id="poof"></div>
+          </div>
+          <div id="capture-confetti"></div>
+          <div id="capture-ball"></div>
+          <div id="capture-ball-button-container" class="hidden">
+            <div id="capture-ball-button"></div>
+          </div>
+        </div>
+
+        <div id="modal-content" class="modal fade" tabindex="-1" role="dialog">
+          <div class="modal-dialog" style="height:90%;">
+              <div class="modal-content" style="background:bisque;">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">×</button>
+                      <h3>Thông tin Pokemon</h3>
+                  </div>
+                  <div class="modal-body">
+                      <img src="images/pokemon/Beedrill.png" style="margin-left:40%;">
+                      <p>Hp:</p>
+                      <p>CP:</p>
+                  </div>
+                  <div class="modal-footer"> 
+                      <a href="#" class="btn btn-primary" data-dismiss="modal">Xác nhận</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+        </section>
+      </div>
+      
+    </div>
+  </div>
+  </div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/animejs/1.0.0/anime.min.js'></script>
+  <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/374756/zingtouch.min.js'></script>
+
+
+
+  <script src="js/index.js"></script>
+
+</body>
+
+</html>

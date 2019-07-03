@@ -1,0 +1,72 @@
+[
+    {
+        "id": "MCARD00",
+        "seri": "647674140742645",
+        "number": "504779928348",
+        "value": "20000",
+        "status": "true"
+    },
+    {
+        "id": "MCARD01",
+        "seri": "528148031652105",
+        "number": "450665311323",
+        "value": "20000",
+        "status": "false"
+    },
+    {
+        "id": "MCARD02",
+        "seri": "343544912650263",
+        "number": "884114713360",
+        "value": "50000",
+        "status": "false"
+    },
+    {
+        "id": "MCARD03",
+        "seri": "230302354534574",
+        "number": "835577543859",
+        "value": "50000",
+        "status": "false"
+    },
+    {
+        "id": "MCARD04",
+        "seri": "533223750398172",
+        "number": "804128093926",
+        "value": "100000",
+        "status": "false"
+    },
+    {
+        "id": "MCARD05",
+        "seri": "017163719924403",
+        "number": "427093197847",
+        "value": "100000",
+        "status": "false"
+    },
+    {
+        "id": "MCARD06",
+        "seri": "296176006122319",
+        "number": "418573294844",
+        "value": "200000",
+        "status": "false"
+    },
+    {
+        "id": "MCARD07",
+        "seri": "466997669038331",
+        "number": "247042705716",
+        "value": "200000",
+        "status": "false"
+    },
+    {
+        "id": "MCARD08",
+        "seri": "630572388325490",
+        "number": "727753456359",
+        "value": "500000",
+        "status": "false"
+    },
+    {
+        "id": "MCARD09",
+        "seri": "405953825290289",
+        "number": "343035776825",
+        "value": "500000",
+        "status": "false"
+    }
+]

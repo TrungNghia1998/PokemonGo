@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="assets/css/character.css">
+</head>
+
+<body>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                
+              </button>
+              
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Thông tin nhân vật</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                            <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <img id="backicon" src="assets/image/backicon.png">
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <p style="text-align: center;">{character[0].name}</p>
+                                        </div>
+                                    </div>
+                            
+                                    <!-- Thiếu 2 button -->
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                            
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div id="character">
+                                                <img src="assets/image/team_valor.jpg" id="team">
+                                                <img src="assets/image/character.png" id="main">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4" id="icon">
+                                            <div class="row"><img src="assets/image/skin.png" id="skin"></div>
+                                            <div class="row"> <img src="assets/image/edit.png" id="edit"></div>
+                                        </div>
+                                    </div>
+                            
+                                    <div class="row" id="char_infor">
+                                        <div class="col-sm-4"></div>
+                                        <div class="col-sm-4" id="infor">
+                                            <p>Level:</p>
+                                            <div class="exp_bar">
+                                                <div class="exp">
+                                                </div>
+                                            </div>
+                                            <p>10 / ??? EXP</p>
+                                            <p>Start day: 24/03/2019</p>
+                                        </div>
+                                        <div class="col-sm-4"></div>
+                                    </div>
+                                </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+   
+</body>
+
+<footer>
+
+</footer>
+
+</html>

@@ -1,0 +1,53 @@
+doctype html
+head
+  title Pokedez
+  meta(name='viewport' content='initial-scale=1.0')
+  meta(charset='utf-8')
+  script(type='text/javascript' src='http://maps.google.com/maps/api/js?sensor=false')
+  script(src='https://cdn.sobekrepository.org/includes/gmaps-markerwithlabel/1.9.1/gmaps-markerwithlabel-1.9.1.min.js')
+  script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBUpoq5tKHVUYbaG9MZz5KK9PMV9REix5s')
+  link(href='https://code.ionicframework.com/nightly/css/ionic.css' rel='stylesheet')
+  script(src='https://code.ionicframework.com/nightly/js/ionic.bundle.js')
+  link(rel='stylesheet' href='https://use.fontawesome.com/releases/v5.8.1/css/all.css' integrity='sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf' crossorigin='anonymous')
+  link(rel='stylesheet' href='style.css')
+  script(src='Menu.js')
+  script(src='app.js')
+#wrapper
+  // Sidebar
+  #sidebar-wrapper
+    ul#side_bar.sidebar-nav
+      li.sidebar-brand(style='font-weight: bold; color: #6FD6FF;')
+        h1(style='margin-top:40px;') MiddleField
+      hr
+      li
+        a(href='#' style=' color: #00B7FF; font-size: 32px; padding: 12px;')
+          i.fas.fa-user
+      li
+        a(href='#' style=' color: #00B7FF; font-size: 31px; padding: 9px;')
+          i.fas.fa-shopping-cart
+      li
+        a(href='#' style=' color: #00B7FF; font-size: 32px; padding: 12px;')
+          i.fas.fa-shopping-bag
+      li
+        a(href='#' style=' color: #00B7FF; ')
+          img(style='height:30px;padding-left: 25px; color: #00B7FF' src='image/pokedez.png' alt='')
+      li
+        a(href='#' style=' color: #00B7FF; font-size: 32px; padding: 12px;')
+          i.fas.fa-cog
+  // /#sidebar-wrapper
+  // Page Content
+  #page-content-wrapper
+    .container-fluid
+      .row
+        .col-lg-12
+          h1
+            a#menu-toggle.gradient-menu(href='#menu-toggle')
+          // you can use tables or divs for the overall layout
+          #map_canvas
+          #dragStatus
+  // /#page-content-wrapper
+script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js')
+script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')
+link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css' rel='stylesheet')
+script(src='http://code.jquery.com/jquery-1.9.1.js')
+script(src='http://code.jquery.com/jquery-migrate-1.1.0.js')

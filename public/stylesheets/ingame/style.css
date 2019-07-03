@@ -1,0 +1,300 @@
+html, body {
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* .btn {
+  z-index: 9999;
+  position: absolute;
+} */
+
+.triangle-left {
+	width: 0;
+	height: 0;
+	border-top: 52px solid transparent;
+	border-right: 50px solid #17a2b8;
+	border-bottom: 52px solid transparent;
+}
+
+#button {
+  margin-bottom: 20%;
+}
+
+.vl {
+  border-left: 3px solid white;
+  height: 60px;
+}
+
+#PokeNearBar {
+  /* margin-left: 95%; */
+  /* background-image: url(http://www.pngmart.com/files/3/Sound-Wave-PNG-Transparent-Picture.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%; */
+  /* opacity: 0.9; */
+  padding-left: 0px !important;
+  z-index: 99;
+  position: relative;
+  display:none;
+  margin-left: 15px;
+}
+
+#flip {
+  /* margin-left: 82%; */
+  padding-left: 0px !important;
+  z-index: 99;
+  position: relative;
+  float:right;
+}
+
+#flip button{
+  margin-right: -15px;
+  border-radius: 0;
+}
+
+
+#flip.row{
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+#imgBag {
+  display: block;
+  width: 70%;
+}
+
+#map_canvas, #wrapper, #page-content-wrapper {
+  height: 105%;
+  width: 100%;
+  position: absolute;
+  overflow: inherit !important;
+}
+
+/* .container-fluid,
+.row {
+  height: 100%;
+  width: 100%;
+} */
+
+.box-shadow-menu {
+  position: relative;
+  padding-left: 1.25em;
+}
+
+.box-shadow-menu:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.25em;
+  width: 1em;
+  height: 0.15em;
+  background: black;
+  box-shadow: 0 0.25em 0 0 black, 0 0.5em 0 0 black;
+}
+
+/* hamburger menu pseudo element gradient */
+
+.gradient-menu {
+  padding-left: 1.25em;
+  position: relative;
+}
+
+.gradient-menu:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.21em;
+  bottom: 0.21em;
+  width: 1em;
+  background: linear-gradient(to bottom, #FCA5F1, #FCA5F1 20%, #B5FFFF 20%, #B5FFFF 40%, #FCA5F1 40%, #FCA5F1 60%, #B5FFFF 60%, #B5FFFF 80%, #FCA5F1 80%, #FCA5F1 100%);
+}
+
+/* http://www.jqueryscript.net/demo/Bootstrap-Sidebar-Extension-With-jQuery-CSS-CSS3/ */
+
+/*!
+ * Start Bootstrap - Simple Sidebar HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+/* Toggle Styles */
+
+.nav-tabs>li {
+  float: none;
+}
+
+.nav-tabs {
+  border-bottom: 0;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+  margin: 0;
+  border-radius: 0;
+}
+
+#wrapper {
+  padding-left: 0;
+  -webkit-transition: all 0.1s ease;
+  -moz-transition: all 0.1s ease;
+  -o-transition: all 0.1s ease;
+  transition: all 0.1s ease;
+  background-color: #a1f199;
+}
+
+#wrapper.toggled {
+  padding-left: 250px;
+}
+
+#sidebar-wrapper {
+  z-index: 1;
+  position: fixed;
+  left: 250px;
+  width: 0;
+  height: 100%;
+  margin-left: -250px;
+  overflow-y: auto;
+  background: #FFFFC7;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  width: 250px;
+}
+
+#page-content-wrapper {
+  width: 100%;
+  position: absolute;
+}
+
+#buttoncharacter {
+  background-color: mediumseagreen;
+  bottom: -88vh;
+  position: relative;
+  left: 69vw;
+  z-index: 99;
+  box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+  border-radius: 5px;
+  opacity:0.6;
+}
+
+#buttoncharacter:hover{
+  opacity:1;
+}
+
+
+#wrapper.toggled #page-content-wrapper {
+  position: absolute;
+  margin-right: -250px;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+  position: absolute;
+  top: 0;
+  width: 250px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar-nav li {
+  text-indent: 20px;
+  line-height: 40px;
+}
+
+.sidebar-nav li a {
+  display: block;
+  text-decoration: none;
+  color: #999999;
+}
+
+.sidebar-nav li a:hover {
+  text-decoration: none;
+  color: #fff;
+  background: #6FD6FF;
+}
+
+.sidebar-nav li a:active, .sidebar-nav li a:focus {
+  text-decoration: none;
+}
+
+.sidebar-nav>.sidebar-brand {
+  height: 65px;
+  font-size: 18px;
+  line-height: 60px;
+}
+
+.sidebar-nav>.sidebar-brand a {
+  color: #999999;
+}
+
+.sidebar-nav>.sidebar-brand a:hover {
+  color: #fff;
+  background: none;
+}
+
+.modal-backdrop {
+  /* bug fix - no overlay */
+  display: none;
+}
+
+#loading {
+  background: url(/images/loading.gif) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  position: fixed; height: 100%; width: 100%; top:0; left: 0; z-index:99999;
+}
+#loadinggif {
+  position: fixed;
+  background: no-repeat center center fixed;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+	background-color: #F5F5F5;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #F90;	
+	background-image: -webkit-gradient(linear,
+									   40% 0%,
+									   75% 84%,
+									   from(#4D9C41),
+									   to(#19911D),
+									   color-stop(.6,#54DE5D))
+}
+
+/* Handle on hover */
+/* ::-webkit-scrollbar-thumb:hover {
+  background-color: #000000;
+	border: 2px solid #555555; 
+} */
+
+.pinterest {
+  border-radius: 2px;
+  text-indent: 20px;
+  width: auto;
+  padding: 0 4px 0 0;
+  text-align: center;
+  text-decoration: none;
+  /* font: 11px/20px "Helvetica Neue", Helvetica, sans-serif; */
+  font-weight: bold;
+  color: #fff!important;
+  background: #e60023 url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zd…UsMS42ODYgMTQuNzMzLDEuNjg2IiBmaWxsPSIjZTYwMDIzIj48L3BhdGg+PC9nPjwvc3ZnPg==) 3px 50% no-repeat;
+  background-size: 14px 14px;
+  -webkit-font-smoothing: antialiased;
+}

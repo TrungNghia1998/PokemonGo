@@ -1,0 +1,29 @@
+#pokeshopModal #itempart {
+    height: 60vh;
+    overflow-y: auto;
+}
+
+#pokeshopModal #imgcashshopitem{
+    background-image: url(/images/bg-item.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#pokeshopModal .modal-content{
+    background-image: url(/images/bg-modal-cashshop.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#pokeshopModal{
+    z-index: 1601;
+}
+
+#pokeshopModal .modal-lg{
+    max-width: 70%!important;
+}
+
+#pokeshopModal .modal-header{
+    padding:1vh;
+}
+

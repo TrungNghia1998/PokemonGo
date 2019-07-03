@@ -1,0 +1,52 @@
+doctype html
+html(lang='en')
+  head
+    title=title
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    title
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css', integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm', crossorigin='anonymous')
+    link(rel='stylesheet', href='/stylesheets/ingame/createcharacter.css')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.css')
+    script(src="https://kit.fontawesome.com/3f47eb379d.js")
+    script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', crossorigin='anonymous')
+    script(src="https://code.jquery.com/jquery-3.4.1.js"  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="  crossorigin="anonymous")
+    script(src="/javascripts/ingame/createcharacter.js")
+    if errors
+      each err in errors
+        script.
+          alert(`Lỗi: #{err.msg}`);
+
+  body
+    form#tennhanvat(action='', method="POST")
+      .container
+        .row.form-group
+          #male.col-sm-5
+            img.btn-primary.btn(src='/images/character/boydefault.png', width="50%")
+          .col-sm-2
+            h1.text-center.font-weight-bold TẠO NHÂN VẬT
+          #female.col-sm-5
+            img.btn-danger.btn(src='/images/character/girldefault.png', width="50%")
+          input#gender(type='text', name='gender', value='null', style="display:none")
+        
+        .row.mt-5.d-flex.justify-content-center
+          #mystic.col-sm-2.btn.btn-dark.mr-5
+            img(src='/images/clan/mystic.png', width="150px", height="150px")
+            h3.mt-1 Mystic
+          #instinct.col-sm-2.btn.btn-dark.mr-5
+            img(src='/images/clan/instinct.png', width="150px", height="150px")
+            h3.mt-1 Instinct
+          #valor.col-sm-2.btn.btn-dark
+            img(src='/images/clan/valor.png', width="150px", height="150px")
+            h3.mt-1 Valor
+          input#clan(type='text', name='clan', value='', style="display:none")
+
+        .row.form-group.mt-5
+          input.form-control.form-control-lg.text-center(type='text', name='name', placeholder="Tên nhân vật")
+
+        .row.form-group.mt-2
+          input#xpos(type='text', name='xpos', value='', style="display:none")
+          input#ypos(type='text', name='ypos', value='', style="display:none")
+          button.btn.btn-dark.btn-block(type='submit') VÀO GAME
+          a.btn.btn-danger.btn-block(href="/ingame/logout") ĐĂNG NHẬP LẠI

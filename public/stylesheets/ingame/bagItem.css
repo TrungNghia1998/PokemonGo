@@ -1,0 +1,51 @@
+#bagitemModal .bg-bag{
+    background-image: url(https://www.shareicon.net/download/2016/08/01/640535_game_512x512.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#bagitemModal #imgItem{
+    width: 10vh;
+}
+
+#bagitemModal .modal-dialog{
+    overflow-y: initial !important;
+}
+
+#bagitemModal #colitem{
+    height: 60vh;
+    overflow-y: auto;
+}
+
+#bagitemModal #imgdetailItem{
+    width: 20vh;
+    height: 20vh;
+    background-image: url(/images/bg-item.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#bagitemModal .vl{
+    border-left: 3px solid grey;
+    height: 60vh;
+}
+
+#bagitemModal .modal-content{
+    background-image: url(/images/bg-modal-bag-pokedex.jpg);
+    background-size: 100% 100%;
+}
+
+#bagitemModal .bg-para-cus{
+    border-radius: 3px;
+    background-color: seagreen;
+    box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+}
+
+#bagitemModal #detailitem{
+    height: 10vh;
+    overflow-y: auto;
+  }
+
+#deleteItem .bg-cus{
+    background-color: seagreen;
+}

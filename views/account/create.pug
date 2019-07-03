@@ -1,0 +1,27 @@
+extends layout
+
+block content
+    h1=title
+
+    p (*) bắt buộc
+    form(method='POST' action='')
+        div.form-group
+            label(for='fullname') Họ và tên:
+            input#fullname.form-control(type='text' placeholder='Nguyễn Văn A' name='fullname' value=(undefined===account ? '' : account.fullname))
+            label(for='family_name') Email:
+            input#email.form-control(type='text' placeholder='nguyenvana@gmail.com' name='email' value=(undefined===account ? '' : account.email))
+            label(for='family_name') Số điện thoại:
+            input#phone.form-control(type='text' placeholder='0123456789' name='phone'  value=(undefined===account ? '' : account.phone))
+            label(for='family_name') Địa chỉ:
+            input#address.form-control(type='text' placeholder='Quận 9 - HCM' name='address' value=(undefined===account ? '' : account.address))
+            label(for='family_name') *Tên tài khoản:
+            input#username.form-control(type='text' placeholder='adeptrai' name='username' required='true' value=(undefined===account ? '' : account.username))
+            label(for='family_name') *Mật khẩu:
+            input#password.form-control(type='password' placeholder='●●●●●●●●' name='password' required='true' )
+            label(for='family_name') *Xác nhận mật khẩu:
+            input#password_cfm.form-control(type='password' placeholder='●●●●●●●●' name='password_cfm' required='true' )
+            button.btn.btn-primary(type='submit') Submit
+    if errors 
+        ul
+        for error in errors
+            li!= error.msg

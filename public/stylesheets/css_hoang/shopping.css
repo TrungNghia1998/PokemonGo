@@ -1,0 +1,63 @@
+body{
+    background: url(../Images/banner2.jpg) no-repeat center;
+    background-size: cover;
+}
+#changepassword{
+    padding: 0;
+    font-family: sans-serif;
+  }
+  .change-section{
+    padding: 40px 0; 
+  }
+  h5{
+    padding-top:30px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+  }
+  h5:after{
+    content: '';
+    background: #333;
+    display: block;
+    height: 3px;
+    width: 150px;
+    margin: 10px auto;
+  }
+  .change-form{
+    max-width: 600px;
+    margin: auto;
+    padding: 0 10px;
+    overflow: hidden;
+  }
+  .change-form-text{
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin:16px 0;
+    border: 0;
+    background:rgba(0,0,0,0.6);
+    padding: 20px 40px;
+    outline: none;
+    color: #ddd;
+    transition: 0.5s;
+  }
+  .change-form-text:hover{
+    box-shadow: 0 0 10px 4px #34495e;
+  }
+  .change-form-btn{
+    float:right;
+    border: 0;
+    background: #34495e;
+    color: #fff;
+    padding: 12px 50px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.5s;
+    margin-bottom: 10px;
+  }
+  .change-form-btn:hover{
+    background: #2980b9;
+  }
+  .choose{
+      text-align: center;
+  }

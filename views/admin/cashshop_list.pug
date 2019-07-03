@@ -1,0 +1,424 @@
+extends layout
+block content
+  - var type_list = [];
+    each e in item_list
+      if type_list.findIndex(t => t.id==e.typeuse) < 0
+        - type_list.push({id:e.typeuse, name:e.type_formatted});
+  .main-panel
+    .content-wrapper
+      .row
+        .col-md-12.grid-margin
+          .d-flex.justify-content-between.flex-wrap
+            .d-flex.align-items-end.flex-wrap
+              .mr-md-3.mr-xl-5
+                h2 Quản lý cashshop
+                p.mb-md-0.badge.badge-info
+                  i.icon-md.mdi.mdi-alert-box
+                  |&nbsp; #{msg}
+              .d-flex
+                i.mdi.mdi-home.text-muted.hover-cursor
+                p.text-muted.mb-0.hover-cursor  / Trang chủ / Quản lý / 
+                p.text-primary.mb-0.hover-cursor &nbsp;Cashshop
+            .d-flex.justify-content-between.align-items-end.flex-wrap
+              button.btn.btn-primary.mt-2.mr-2.mt-xl-0(data-toggle="modal" data-target="#createItem") Thêm vật phẩm mới
+              button.btn.btn-primary.mt-2.mt-xl-0(data-toggle="modal" data-target="#createCashshop") Thêm vật phẩm vào Cashshop
+
+      //Thống kê sơ bộ
+      .row
+        .col-md-12.grid-margin.stretch-card
+          .card
+            .card-body.dashboard-tabs.p-0
+              ul.nav.nav-tabs.px-4(role='tablist')
+                li.nav-item
+                  a#statistics-tab.nav-link.active(data-toggle='tab', href='#statistics', role='tab', aria-controls='overview', aria-selected='true') Thống kê
+                li.nav-item
+                  a#rankAmount-tab.nav-link(data-toggle='tab', href='#rankAmount', role='tab', aria-controls='overview', aria-selected='true') TOP SALE (Số lượng)
+                li.nav-item
+                  a#rankTurnover-tab.nav-link(data-toggle='tab', href='#rankTurnover', role='tab', aria-controls='overview', aria-selected='true') TOP SALE (Doanh thu)
+              .tab-content.py-0.px-0
+                #statistics.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='overview-tab')
+                  .d-flex.flex-wrap.justify-content-xl-between
+                    .d-flex.border-md-right.flex-grow-1.align-items-center.justify-content-center.p-3.item
+                      i.mdi.mdi-package.mr-3.icon-lg.text-success
+                      .d-flex.flex-column.justify-content-around
+                        small.mb-1.text-muted Vật phẩm hiện có
+                        h5.mr-2.mb-0 #{item_list.length}
+                    .d-flex.border-md-right.flex-grow-1.align-items-center.justify-content-center.p-3.item
+                      i.mdi.mdi-store.mr-3.icon-lg.text-primary
+                      .d-flex.flex-column.justify-content-around
+                        small.mb-1.text-muted Vật phẩm trong cashshop
+                        h5.mr-2.mb-0  #{cashshop_list.length}
+                - var rank = [];
+                each i in cashshop_list
+                  - let amount = 0;
+                  each log in i.translog
+                    - amount += log.amount;
+                  - let turnover = amount * i.price;
+                  if rank.findIndex(r => r.item.itemid.name == i.itemid.name) < 0
+                    - rank.push({item: i, amount: amount, turnover: turnover});
+                  else
+                    - rank[rank.findIndex(r => r.item.itemid.name == i.itemid.name)].amount+=amount;
+                    - rank[rank.findIndex(r => r.item.itemid.name == i.itemid.name)].turnover+=turnover;
+                - rank.sort((a,b)=>{return b.amount-a.amount});
+                #rankAmount.tab-pane.fade.show(role='tabpanel', aria-labelledby='overview-tab')                 
+                  .d-flex.flex-wrap.justify-content-xl-between
+                    .d-flex.border-md-right.flex-grow-1.align-items-center.justify-content-center.p-3.item
+                      //- i
+                      h4.mr-4=rank[0].item.itemid.name
+                      img.mr-3(src=rank[0].item.itemid.image.value, width="50px", height="50px")
+                      .d-flex.flex-column.justify-content-around
+                        small.mb-1.text-muted #1
+                        h5.mr-2.mb-0 SL: #{rank[0].amount}
+                    .d-flex.border-md-right.flex-grow-1.align-items-center.justify-content-center.p-3.item
+                      //- i.mdi.mdi-map.mr-3.icon-lg.text-success
+                      h4.mr-4=rank[1].item.itemid.name
+                      img.mr-3(src=rank[1].item.itemid.image.value, width="50px", height="50px")
+                      .d-flex.flex-column.justify-content-around
+                        small.mb-1.text-muted #2
+                        h5.mr-2.mb-0  SL: #{rank[1].amount} 
+                    .d-flex.border-md-right.flex-grow-1.align-items-center.justify-content-center.p-3.item
+                      //- i.mdi.mdi-map.mr-3.icon-lg.text-success
+                      h4.mr-4=rank[2].item.itemid.name
+                      img.mr-3(src=rank[2].item.itemid.image.value, width="50px", height="50px")
+                      .d-flex.flex-column.justify-content-around
+                        small.mb-1.text-muted #3
+                        h5.mr-2.mb-0 SL: #{rank[2].amount}
+
+                - rank.sort((a,b)=>{return b.turnover-a.turnover});       
+                #rankTurnover.tab-pane.fade.show(role='tabpanel', aria-labelledby='overview-tab')                 
+                  .d-flex.flex-wrap.justify-content-xl-between
+                    .d-flex.border-md-right.flex-grow-1.align-items-center.justify-content-center.p-3.item
+                      //- i
+                      h4.mr-4=rank[0].item.itemid.name
+                      img.mr-3(src=rank[0].item.itemid.image.value, width="50px", height="50px")
+                      .d-flex.flex-column.justify-content-around
+                        small.mb-1.text-muted #1
+                        .row 
+                          i.mdi.mdi-diamond.mr-1.icon-sm.text-danger
+                          h5.mr-2.mb-0 #{rank[0].turnover} 
+                    .d-flex.border-md-right.flex-grow-1.align-items-center.justify-content-center.p-3.item
+                      //- i.mdi.mdi-map.mr-3.icon-lg.text-success
+                      h4.mr-4=rank[1].item.itemid.name
+                      img.mr-3(src=rank[1].item.itemid.image.value, width="50px", height="50px")
+                      .d-flex.flex-column.justify-content-around
+                        small.mb-1.text-muted #2
+                        .row 
+                          i.mdi.mdi-diamond.mr-1.icon-sm.text-danger
+                          h5.mr-2.mb-0  #{rank[1].turnover} 
+                    .d-flex.border-md-right.flex-grow-1.align-items-center.justify-content-center.p-3.item
+                      //- i.mdi.mdi-map.mr-3.icon-lg.text-success
+                      h4.mr-4=rank[2].item.itemid.name
+                      img.mr-3(src=rank[2].item.itemid.image.value, width="50px", height="50px")
+                      .d-flex.flex-column.justify-content-around
+                        small.mb-1.text-muted #3
+                        .row 
+                          i.mdi.mdi-diamond.mr-1.icon-sm.text-danger
+                          h5.mr-2.mb-0  #{rank[2].turnover}
+
+      //Danh sách vật phẩm có trong hệ thống
+      .row
+        .col.grid-margin.stretch-card
+          .card
+            .card-body
+              h4.card-title Danh sách vật phẩm có trong hệ thống
+              .table-responsive.clusterize-scroll
+                table#adminTable.table.table-hover
+                  thead
+                    tr
+                      th #
+                      th Hình ảnh
+                      th Tên vật phẩm
+                      th Loại
+                      th Mô tả                      
+                      th Thao tác
+                  tbody
+                    each e,index in item_list
+                      tr
+                        td #{index + 1}
+                        td
+                          img(src=e.image.value alt=e.image.name)
+                        td #{e.name}                
+                        td
+                          label.badge.badge-success #{e.type_formatted}                    
+                        td.w-25
+                          details
+                            summary Click để xem
+                            p #{e.detail}                    
+                        td
+                          button#update.btn.btn-warning.mr-2(data-toggle="modal" data-target="#edit" + e._id)
+                            i.mdi.mdi-border-color
+
+      //Danh sách vật phẩm có trong cửa hàng         
+      .row
+        .col.grid-margin.stretch-card
+          .card
+            .card-body
+              h4.card-title Danh sách vật phẩm trong cashshop
+              .table-responsive.clusterize-scroll
+                table#adminTable.table.table-hover
+                  thead
+                    tr
+                      th #
+                      th Hình ảnh
+                      th Tên vật phẩm
+                      th Giá tiền
+                      th Ngày bắt đầu bán                        
+                      th Thao tác
+                  tbody
+                    each e,index in cashshop_list
+                      tr
+                        td #{index + 1}
+                        td 
+                          img(src=e.itemid.image.value alt=e.itemid.image.name)
+                        td [#{e.itemid.type_formatted}] #{e.itemid.name}                
+                        td                                    
+                          i.badge.badge-success.mdi.mdi-diamond.mr-1.icon-sm.text-light #{e.price}              
+                        td
+                          label #{e.startdate_formatted}                    
+                        td
+                          button.detail.btn.btn-primary.mr-2(data-toggle="modal" data-target="#detail" + e._id)
+                            i.mdi.mdi-note-text
+                          button#update.btn.btn-warning.mr-2(data-toggle="modal" data-target="#editCashshop" + e._id)
+                            i.mdi.mdi-border-color
+                          button#update.btn.btn-danger(data-toggle="modal" data-target="#delete" + e._id)
+                            i.mdi.mdi-delete
+      
+                      
+      footer.footer
+        .d-sm-flex.justify-content-center.justify-content-sm-between
+          span.text-muted.text-center.text-sm-left.d-block.d-sm-inline-block
+            | Copyright © 2018 
+            a(href='https://www.urbanui.com/', target='_blank') Urbanui
+            | . All rights reserved.
+          span.float-none.float-sm-right.d-block.mt-1.mt-sm-0.text-center
+            | Hand-crafted & made with 
+            i.mdi.mdi-heart.text-danger
+              
+        script(src='/admin/vendor/base/vendor.bundle.base.js')
+        // endinject
+        // Plugin js for this page
+        script(src='/admin/vendor/chart.js/Chart.min.js')
+        script(src='/admin/vendor/datatables.net/jquery.dataTables.js')
+        script(src='/admin/vendor/datatables.net-bs4/dataTables.bootstrap4.js')
+        // End plugin js for this page
+        // inject:js
+        script(src='/admin/js/off-canvas.js')
+        script(src='/admin/js/hoverable-collapse.js')
+        script(src='/admin/js/template.js')
+        // endinject
+        // Custom js for this page
+        script(src='/admin/js/dashboard.js')
+        script(src='/admin/js/data-table.js')
+        script(src='/admin/js/jquery.dataTables.js')
+        link(href="https://cdnjs.cloudflare.com/ajax/libs/clusterize.js/0.18.0/clusterize.css" rel="stylesheet")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/clusterize.js/0.18.0/clusterize.js")
+        script(src='/admin/js/dataTables.bootstrap4.js')
+        // End custom js for this page
+        script(src='/admin/js/cashshop.js')
+        script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js")
+
+        // Modal chi tiết danh sách nhân vật mua vật phẩm này
+        each e in cashshop_list
+          .modal.fade(id="detail"+e._id, role='dialog')
+            .modal-dialog.modal-lg
+              // Modal content
+              .modal-content
+                .modal-header
+                  .display-2.modal-title.text-dark Lịch sử giao dịch
+                .modal-body
+                  .row
+                    .col.grid-margin.stretch-card
+                      .card
+                        .card-body
+                          h4.card-title Danh sách người chơi đã mua "#{e.itemid.name}"
+                          .table-responsive.clusterize-scroll
+                            table.table.table-hover
+                              thead
+                                tr
+                                  th(style='display: none') _id   
+                                  th(style='display: none') id Người chơi    
+                                  th #                 
+                                  th Người chơi
+                                  th Số lượng mua    
+                                  th Ngày mua                                      
+                                  //- th Thao tác
+                              tbody
+                                if e.translog.length > 0                         
+                                  each user,index in e.translog
+                                    tr
+                                      td(style='display:none') #{e._id}
+                                      td(style='display:none') #{user.characterid._id}
+                                      td #{index + 1}
+                                      td #{user.characterid.name}
+                                      td #{user.amount}
+                                      td #{e.date_formatted[index]}                                                 
+                                      //- td
+                                      //-   button.detail.btn.btn-primary.mr-2(data-toggle="modal" data-target="#detailNguoiChoi"+e._id)
+                                      //-     i.mdi.mdi-information
+                .modal-footer
+                  button.btn.btn-primary.btn-block(type='button', data-dismiss='modal') Đóng    
+
+        //Modal thêm vật phẩm
+        .modal.fade(id="createItem", role='dialog')
+          .modal-dialog.modal-lg
+            // Modal content
+            .modal-content
+              .modal-header
+                .display-3.modal-title.text-dark Thêm vật phẩm mới
+              .modal-body.card-body
+                p.badge.badge-danger Chú ý: Nếu vật phẩm là VIP thì vui lòng nhập mô tả là VIP + [số tháng hiệu lực].
+                form.forms-sample(method="POST", action="/admin/item/create", enctype="multipart/form-data")
+                  .col-md.mr-2
+                    .form-group.row
+                      label.col-sm-3.col-form-label.badge.badge-primary Tên
+                      .col-sm-9
+                        input.form-control(type='text', name='name', placeHolder="Tên vật phẩm")
+                  .col-md
+                    .form-group.row
+                      label.col-sm-3.col-form-label.badge.badge-primary Loại
+                      .col-sm-9
+                        select(name="type").form-control.typeSelect    
+                          option(value="tool") Công cụ
+                          option(value="skin") Thời trang    
+                          option(value="packet") Gói
+                          option(value="other") Linh tinh      
+                          option(value="vip") VIP
+        
+                  .col-md
+                    .form-group.row
+                      label.col-sm-3.col-form-label.badge.badge-primary Hình ảnh
+                      .col-sm-8
+                        input#inputImg.form-control(type='file', name='myFile', accept='image/*')
+                      .col-sm-1.float-right.border.border-warning.rounded
+                        img#createImg(src="" width="45px", height="45px")
+                  .col-md
+                    .form-group.row
+                      label.col-sm-3.col-form-label.badge.badge-primary Mô tả
+                      textarea.form-control(type='text', name='detail', cols="30", rows="10", placeHolder="Vật phẩm này có gì hot?")
+                  .float-right
+                    button.btn.btn-primary.mr-2(type='submit') Xác nhận
+                    button.btn.btn-danger(type='button', data-dismiss='modal') Đóng
+        
+        //Modal thêm item bán
+        .modal.fade(id="createCashshop", role='dialog')
+          .modal-dialog.modal-lg
+            // Modal content
+            .modal-content
+              .modal-header
+                .display-3.modal-title.text-dark Thêm vật phẩm vào Cashshop
+              .modal-body.card-body
+                form.forms-sample(method="POST", action="/admin/cashshop/create")
+                  .col-md.mr-2
+                    .form-group.row
+                      label.col-sm-3.col-form-label.badge.badge-primary Vật phẩm
+                      .col-sm-8
+                        select#itemidCash(type="text" name="itemid", placeHolder="Vật phẩm").form-control.typeSelect
+                          each i in item_list
+                            option(value=i._id, data=i.image.value) [#{i.type_formatted}] #{i.name}
+                      .col-sm-1.border.border-primary.rounded
+                        img#createCashImg(src="" width="45px", height="45px")
+                  .col-md
+                    .form-group.row
+                      label.col-sm-3.col-form-label.badge.badge-primary Giá (GEM)
+                      .col-sm-9
+                        input.form-control(type="number", name="price", min=0, step=1, value=0)
+                      
+                  .float-right
+                    button.btn.btn-primary.mr-2(type='submit') Xác nhận
+                    button.btn.btn-danger(type='button', data-dismiss='modal') Đóng
+
+        //Modal sửa item bán
+        each e in cashshop_list
+          .modal.fade(id="editCashshop"+e._id, role='dialog')
+            .modal-dialog.modal-lg
+              // Modal content
+              .modal-content
+                .modal-header
+                  .display-3.modal-title.text-dark Sửa vật phẩm #{e.itemid.name}
+                .modal-body.card-body
+                  form.forms-sample(method="POST", action="/admin/cashshop/"+e._id+"/update")
+                    .col-md.mr-2
+                      .form-group.row
+                        label.col-sm-3.col-form-label.badge.badge-warning Vật phẩm
+                        .col-sm-8
+                          - var srcImg;
+                          select.itemidCash(id="CashImg"+e._id type="text" name="itemid", placeHolder="Vật phẩm").form-control.typeSelect
+                            each i in item_list
+                              if (i._id.toString() == e.itemid._id.toString())
+                                - srcImg = i.image.value;
+                                option(value=i._id, data=i.image.value, selected) [#{i.type_formatted}] #{i.name}
+                              else
+                                option(value=i._id, data=i.image.value) [#{i.type_formatted}] #{i.name}
+                        .col-sm-1.border.border-warning.rounded
+                          img(id="createCashImg"+e._id src=srcImg width="45px", height="45px")
+                    .col-md
+                      .form-group.row
+                        label.col-sm-3.col-form-label.badge.badge-primary Giá (GEM)
+                        .col-sm-9
+                          input.form-control(type="number", name="price", min=0, step=1, value=e.price)
+                        
+                    .float-right
+                      button.btn.btn-primary.mr-2(type='submit') Xác nhận
+                      button.btn.btn-danger(type='button', data-dismiss='modal') Đóng
+
+
+        //Modal update vật phẩm
+        each e in item_list
+          .modal.fade(id="edit"+e._id, role='dialog')
+            .modal-dialog.modal-lg
+              // Modal content
+              .modal-content
+                .modal-header
+                  .display-3.modal-title.text-dark Cập nhật vật phẩm - #{e.name}
+                .modal-body.card-body
+                  p.badge.badge-danger Chú ý: Nếu vật phẩm là VIP thì vui lòng nhập mô tả là VIP + [số tháng hiệu lực].
+                  form.forms-sample(method="POST", action="/admin/item/"+e._id+"/update", enctype="multipart/form-data")
+                    .col-md.mr-2
+                      .form-group.row
+                        label.col-sm-3.col-form-label.badge.badge-warning Tên
+                        .col-sm-9
+                          input.form-control(type='text', name='name', placeHolder="Tên vật phẩm", value=e.name==undefined?'NULL':e.name)
+                    .col-md
+                      .form-group.row
+                        label.col-sm-3.col-form-label.badge.badge-warning Loại
+                        .col-sm-9
+                          select(name="type" id="IdType"+e._id).form-control.typeSelect
+                            each type in type_list
+                              if (type.id == e.typeuse)                               
+                                option(value=type.id, selected) #{type.name}
+                              else
+                                option(value=type.id) #{type.name}  
+                    .col-md
+                      .form-group.row
+                        label.col-sm-3.col-form-label.badge.badge-warning Hình ảnh
+                        .col-sm-8
+                          input.inputImgUpdate.form-control(id="img"+e._id type='file', name='myFile', accept='image/*')
+                          input(type="text", style="display:none", name='image', value=e.image._id)
+                        .col-sm-1.float-right.border.border-warning.rounded
+                          img(id="previewimg"+e._id src=e.image.value width="45px", height="45px")
+                          
+                    .col-md
+                      .form-group.row
+                        label.col-sm-3.col-form-label.badge.badge-warning Mô tả
+                        textarea.form-control(type='text', name='detail', cols="30", rows="10", placeHolder="Vật phẩm này có gì hot?") #{e.detail}
+                    .float-right
+                      
+                      button.btn.btn-primary.mr-2(type='submit') Xác nhận
+                      button.btn.btn-danger(type='button', data-dismiss='modal') Đóng
+
+
+        //Modal xóa vật phẩm cashshop
+        each e in cashshop_list
+          .modal.fade(id="delete"+e._id, role='dialog')
+            .modal-dialog.modal-lg
+              // Modal content
+              .modal-content
+                .modal-header
+                  .display-3.modal-title.text-dark Xóa [#{e.itemid.type_formatted}] #{e.itemid.name} ra khỏi cửa hàng
+                .modal-body.card-body
+                  h4 Bạn có chắc chắn xóa vật phẩm "[#{e.itemid.type_formatted}] #{e.itemid.name}"?
+                  p "[#{e.itemid.type_formatted}] #{e.itemid.name}" sẽ không có mặt trong cửa hàng và lịch sử giao dịch sẽ bị xóa hoàn toàn. Hãy chắc chắn bạn muốn làm điều này. 
+                  form.forms-sample(method="POST", action="/admin/cashshop/"+e._id+"/delete")
+                    .float-right
+                      button.btn.btn-danger.mr-2(type='submit') Xác nhận
+                      button.btn.btn-primary(type='button', data-dismiss='modal') Đóng        

@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css?family=Mali');
+body{
+    margin:0;
+    padding:0;
+    background-image: linear-gradient(to right bottom, #3737ed, #4f35e1, #5e33d5, #6832c9, #6f32be);
+    height:100vh;
+    font-family:'Mali', san-serif;
+    overflow:hidden;
+  }
+#pokecoin{
+    width: 20%;
+    margin-left: 25%;
+}
+
+#coin{
+    font-size: xx-large;
+    color: orange;
+}
+
+.modal-title{
+    text-align: center;
+    font-size: xx-large;
+    color: orange;
+}
+
+#item{
+    width: 10%;
+    margin-left: 20%;
+}
+
+#imgItem{
+    width: 30%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+#rowItem{
+    padding-top: 2%;
+}
+

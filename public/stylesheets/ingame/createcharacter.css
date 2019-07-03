@@ -1,0 +1,40 @@
+body  {
+    background-image: url("/images/bg-create-character.jpg");
+    background-size: cover;
+}
+
+.selected {
+    border: 10px solid #343a40!important;
+}
+
+.selected2 {
+    border: 10px solid #f8f9fa!important;
+}
+
+#character{
+    width: 90%;
+}
+
+#tennhanvat{
+    text-align: center;
+    padding-top: 5%;
+}
+#imageCharacter{
+transform: translate(-50%,-50%);
+position: absolute;
+top: 50%;
+left: 50%;
+}
+
+#Clan{
+    width: 65%;
+}
+
+/* .container{
+    background-image: ;
+} */
+
+#imgClan{
+    padding-left: 21%;
+    padding-bottom: 2%;
+} 

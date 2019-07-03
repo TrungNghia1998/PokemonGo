@@ -1,0 +1,43 @@
+doctype html
+head
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css')
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+  script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js')
+  link(rel='stylesheet' href='https://use.fontawesome.com/releases/v5.8.1/css/all.css' integrity='sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf' crossorigin='anonymous')
+  link(rel='stylesheet' href='assets/css/trade.css')
+#main.container-fluid
+  .row
+    .col-sm-2
+      img#backicon(src='assets/image/backicon.png')
+    .col-sm-8
+    .col-sm-2
+      img#avatarplayer(src='assets/image/player2.jpg')
+      p TenNhanVat
+      p Level
+  .row
+    .col-sm-2
+    #pokemon.col-sm-3
+      .rectangle
+        p T&ecirc;n Pokemon:
+        p CP:
+        p HP:
+      img#imgPokemon(src='assets/image/pkm1.png')
+    #arrow.col-sm-2
+      img#imgPokemon
+      i.fas.fa-exchange-alt(style='font-size : 100px;padding-bottom:20px;')
+    .col-sm-3
+      .rectangle
+        p T&ecirc;n Pokemon:
+        p CP:
+        p HP:
+      img#imgPokemon(src='assets/image/pkm2.png')
+    .col-sm-2
+  #confirm.row
+    button.button Confirm.
+  .col-sm-2
+    img#avatarplayer(src='assets/image/player1.png')
+    p TenNhanVat
+    p Level
+footer

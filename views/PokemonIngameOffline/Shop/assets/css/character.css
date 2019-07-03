@@ -1,0 +1,43 @@
+#team{
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+    padding: inherit;
+    opacity: 0.6;
+}
+#main{
+    z-index: 1;   
+    padding: inherit; 
+    transform: translate(73%, 20%);
+}
+.exp{    
+    padding: 10px;    
+    width: 80%;
+    background-color: red;
+    -webkit-border-radius: 8px;
+}
+.exp_bar{
+    width: 100%;
+    background-color: #ddd; 
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    border-radius: 10px;
+    border: 2px solid #cc0000;
+}
+#char_infor{
+    padding-top: 5%;
+}
+#infor{
+    text-align: center;    
+    font-size: x-large;
+}
+#icon{
+    padding-right: 3%;
+}
+#skin,#edit{
+    float: right;
+    width:50px;
+    height: 50px;
+}

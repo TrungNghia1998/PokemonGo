@@ -1,0 +1,105 @@
+extends ../layout
+
+block content
+  .col-md-12
+  .card
+    .card-header.card-header-primary
+      h4.card-title
+        h2(style='\
+text-align: center;\
+margin-left: 142px;\
+')= title
+          button#btnAddNew.btn.btn-success(style='\
+float: right;\
+margin-right: 44px;\
+width: 16%;\
+') Th&ecirc;m m&#x1EDB;i
+    .card-body
+      .table-responsive(style='\
+      margin: 10px;\
+      ')
+        table.table.table-bordered.mx-auto.w-auto
+          thead.thead-dark
+            tr
+              th(scope='col' style='color: #fff;text-align: center;')  T&ecirc;n t&agrave;i kho&#x1EA3;n
+
+              th(scope='col' style='text-align: center;color: #fff;')  S&#x1ED1; ti&#x1EC1;n
+
+              th(scope='col' style='text-align: center;color: #fff;')  Ng&agrave;y n&#x1EA1;p
+
+              th(scope='col' style='text-align: center;width: 18%;color: #fff;')  Thao t&aacute;c
+          tbody
+            each recharge in rechargelog_list
+              tr
+                td(style='text-align: center')
+                  a(href=recharge.url) #{recharge.accountid.username}
+                td(style='text-align: center')
+                  a(href=recharge.url) #{recharge.amount_formatted}
+                td(style='text-align: center')
+                  a(href=recharge.url) #{recharge.date_formatted}
+                td(style='text-align: center')
+                  a.btn.btn-success.fas.fa-info(href='' style='margin: 5px;width: 50px;' role='button' idRecharge=recharge._id)
+                  a.btn.btnEdit.btn-primary.fas.fa-pen(href='' style='width: 50px;' role='button' idRecharge=recharge._id)
+                  a.btn.btn-danger.fas.fa-trash(href='' style='margin: 5px;width: 50px;' role='button' idRecharge=recharge._id)
+        nav(aria-label='...' style='\
+float: right;\
+')
+          ul.pagination
+            li.page-item.disabled
+              a.page-link(href='#' tabindex='-1' aria-disabled='true') Previous
+            li.page-item
+              a.page-link(href='#') 1
+            li.page-item.active(aria-current='page')
+              a.page-link(href='#')
+                | 2 
+                span.sr-only (current)
+            li.page-item
+              a.page-link(href='#') 3
+            li.page-item
+              a.page-link(href='#') Next
+
+  // Modal
+  #modalAddUpdate.modal.fade(tabindex='-1' role='dialog' aria-hidden='true' style='display: block;margin: 15px 180px 0px 200px;')
+    // Modal content
+    .modal-content
+      .modal-header
+        button.close(type='button' data-dismiss='modal') &times;
+        h4.modal-title T&agrave;i kho&#x1EA3;n
+      .modal-body
+        form(action='/action_page.php')
+          .form-group
+            label(for='txtFullName') H&#x1ECD; t&ecirc;n:
+            input#txtFullName.form-control(type='text')
+            input#hiddenID(type='hidden' value='0')
+          .form-group
+            label(for='txtEmail') Email:
+            input#txtEmail.form-control(type='email')
+          .form-group
+            label(for='txtPhone') S&#x1ED1; &dstrok;i&#x1EC7;n tho&#x1EA1;i:
+            input#txtPhone.form-control(type='number')
+          .form-group
+            label(for='txtAddress') &Dstrok;&#x1ECB;a ch&#x1EC9;:
+            input#txtAddress.form-control(type='text')
+          .form-group
+            label(for='txtAccountName') T&ecirc;n t&agrave;i kho&#x1EA3;n:
+            input#txtAccountName.form-control(type='text')
+          .form-group
+            label(for='txtPassword') Password:
+            input#txtPassword.form-control(type='password')
+          .form-group
+            label(for='txtTypeAccount') Lo&#x1EA1;i t&agrave;i kho&#x1EA3;n:
+            input#txtTypeAccount.form-control(type='text')
+          .checkbox
+            label
+              input#ckStatus(type='checkbox')
+              |  &Dstrok;&#x1B0;&#x1EE3;c k&iacute;ch ho&#x1EA1;t
+      .modal-footer
+        button#btnSave.btn.btn-primary(type='submit') Lưu
+        button.btn.btn-default(type='button' data-dismiss='modal') Close
+  
+  ul
+    each recharge in rechargelog_list
+      li 
+        a(href=recharge.url) #{recharge.accountid.fullname} - #{recharge.amount_formatted} - #{recharge.date_formatted} - #{recharge.method} - #{recharge.status_formatted}
+    else
+      li Không có giao dịch.

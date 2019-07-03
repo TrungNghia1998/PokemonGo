@@ -1,0 +1,36 @@
+
+.circle {
+  margin-left: 24%;
+  height: 90%;
+  width: 48%;
+  position: absolute;
+  background-image: url(https://pic.pimg.tw/yide168/1471006979-784530856.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  /* animation-iteration-count: 2;
+  -webkit-animation: rotateY 1s infinite linear;
+  animation: rotateY 1s infinite linear; */
+}
+
+.circles {
+  position: relative;
+  height: 400px;
+  width: 400px;
+  border-radius: 50%;
+  border: 10px solid dodgerblue;
+  margin: auto;
+}
+
+@-webkit-keyframes rotateY {
+  to { -webkit-transform: rotateY(360deg); }
+}
+@keyframes rotateY {
+  to { transform: rotateY(360deg); }
+}
+
+#pokestopModal .modal-content{
+  background-image: url(/../../images/bg-pokestop.jpg);
+  background-size: 100% 100%;
+}
+

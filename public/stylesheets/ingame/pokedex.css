@@ -1,0 +1,81 @@
+#pokemonModal .bg-bag{
+  background-image: url(https://www.shareicon.net/download/2016/08/01/640535_game_512x512.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#pokemonModal #imgPokemon{
+  width: 10vh;
+}
+
+#pokemonModal .modal-dialog{
+  overflow-y: initial !important;
+}
+
+#pokemonModal #colPokemon{
+  height: 60vh;
+  overflow-y: auto;
+}
+
+#pokemonModal #imgdetailPokemon{
+  width: 20vh;
+  height: 20vh;
+  background-image: url(/images/bg-item.jpg);
+  background-repeat: no-repeat;
+
+  background-size: cover;
+}
+
+#pokemonModal .vl{
+  border-left: 3px solid grey;
+  height: 100%;
+}
+
+#pokemonModal #typePokemon{
+  height: 5vh;
+  width: 5vh;
+}
+
+#pokemonModal #detailPokemon{
+  height: 10vh;
+  overflow-y: auto;
+}
+
+#pokemonModal .modal-content{
+  background-image: url(/images/bg-modal-bag-pokedex.jpg);
+  background-size: 100% 100%;
+}
+
+#pokemonModal .bg-para-cus{
+  border-radius: 3px;
+  background-color: seagreen;
+  box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+}
+
+
+/*Pokedex*/
+#pokedexModal .modal-body{
+  height: 65vh;
+  overflow-y: auto;
+}
+
+#pokedexModal .selected{
+    border: 5px solid #f8f9fa!important;
+}
+
+#pokedexModal table{
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  background-color: transparent;
+}
+
+#pokedexModal .uncatched{
+  filter: blur(4px);
+}
+
+#pokedexModal .modal-content{
+  background-image: url(/images/bg-pokedex.png);
+  background-size: 100% 100%;
+  
+}

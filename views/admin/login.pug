@@ -1,0 +1,60 @@
+doctype html
+html(lang='en')
+  head
+    // Required meta tags
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    title MiddleField Admin Page
+    // plugins:css
+    link(rel='stylesheet', href='vendor/mdi/css/materialdesignicons.min.css')
+    link(rel='stylesheet', href='vendor/base/vendor.bundle.base.css')
+    // endinject
+    // plugin css for this page
+    // End plugin css for this page
+    // inject:css
+    link(rel='stylesheet', href='css/style.css')
+  body
+    .container-scroller
+      .container-fluid.page-body-wrapper.full-page-wrapper
+        .content-wrapper.d-flex.align-items-stretch.auth.auth-img-bg
+          .row.flex-grow
+            .col-lg-6.d-flex.align-items-center.justify-content-center
+              .auth-form-transparent.text-left.p-3
+                .brand-logo
+                  //- img(src='../../images/logo.svg', alt='logo')
+                  .display-2 MiddleField
+                h4 Chào mừng bạn đã trở lại!
+                h6.font-weight-light Đăng nhập để tiếp tục!
+                if message
+                    i.mdi.mdi-account-outline.text-danger #{message}
+                form.pt-3(method='POST', action='')
+                  .form-group
+                    label(for='exampleInputEmail') Tài khoản
+                    .input-group
+                      .input-group-prepend.bg-transparent
+                        span.input-group-text.bg-transparent.border-right-0
+                          i.mdi.mdi-account-outline.text-primary
+                      input#exampleInputEmail.form-control.form-control-lg.border-left-0(type='text', name='username', placeholder='Tài khoản')
+                  .form-group
+                    label(for='exampleInputPassword') Mật khẩu
+                    .input-group
+                      .input-group-prepend.bg-transparent
+                        span.input-group-text.bg-transparent.border-right-0
+                          i.mdi.mdi-lock-outline.text-primary
+                      input#exampleInputPassword.form-control.form-control-lg.border-left-0(type='password', name='password', placeholder='Mật khẩu')
+                  .my-3
+                  //- input(type='submit' value="haha")
+                  button.btn.btn-block.btn-primary.btn-lg.font-weight-medium.auth-form-btn(type='submit') LOGIN
+            .col-lg-6.login-half-bg.d-flex.flex-row
+              p.text-white.font-weight-medium.text-center.flex-grow.align-self-end Copyright © 2018  All rights reserved.
+        // content-wrapper ends
+        // page-body-wrapper ends
+        // container-scroller
+        // plugins:js
+        script(src='vendor/base/vendor.bundle.base.js')
+        // endinject
+        // inject:js
+        script(src='js/off-canvas.js')
+        script(src='js/hoverable-collapse.js')
+        script(src='js/template.js')
+        // endinject

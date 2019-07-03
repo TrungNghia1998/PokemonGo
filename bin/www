@@ -1,0 +1,145 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require('../app');
+var debug = require('debug')('middlefield:server');
+var http = require('http');
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+var server = http.createServer(app);
+var io = require('socket.io').listen(server)
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
+
+
+//Someone connect
+var userCount = 0;
+var room = [];
+let playerOnMap = new Array();
+io.on('connection', async function (socket) {
+  userCount++;
+
+  //Báo cáo mình đã đăng nhập
+  socket.on('hello', function (data) {
+    console.log('=====> ' + data.char.name + ' vừa kết nối!');
+    if (playerOnMap.findIndex(p => { return p.data.char._id.toString() == data.char._id.toString() }) >= 0) {
+      socket.emit('userAlready', '');
+      return;
+    }
+    playerOnMap.push({ data: data, idsocket: socket.id });
+    //Trả về client số lượng user đang onl
+    io.emit('userCount', { userCount: userCount });
+    io.emit('updateCharOnMap', playerOnMap)
+
+    console.log(playerOnMap)
+  })
+
+  //Cập nhật lại nhân vật khi di chuyển
+  socket.on('move', function (data) {
+    for (var i = 0; i < playerOnMap.length; i++) {
+      if (playerOnMap[i].data.char._id === data.char._id) {
+        playerOnMap[i].data = data;
+        break;
+      }
+    }
+    io.emit('updateMove', data)
+  })
+
+  //Báo cáo đã out
+  socket.on('disconnect', function () {
+    userCount--;
+    io.emit('userCount', { userCount: userCount });
+    var i = playerOnMap.findIndex(p => p.idsocket == socket.id);
+    if (playerOnMap[i] != undefined) {
+      require('../controllers/ingameController').setting_pos_character(playerOnMap[i].data.char._id, playerOnMap[i].data.xpos, playerOnMap[i].data.ypos)
+      playerOnMap.splice(i, 1);
+      io.emit('updateCharOnMap', playerOnMap);
+      console.log('===> Có người vừa ngắt kết nối!');
+    }
+  });
+
+  //Trả về client nội dung chat
+  socket.on('chat message', function (data) {
+    io.emit('chat message', data);
+  });
+
+})

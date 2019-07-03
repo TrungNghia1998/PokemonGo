@@ -1,0 +1,427 @@
+extends layout
+block content
+  .main-panel
+    .content-wrapper
+      .row
+        .col-md-12.grid-margin
+          .d-flex.justify-content-between.flex-wrap
+            .d-flex.align-items-end.flex-wrap
+              .mr-md-3.mr-xl-5
+                h2 Quản lý Pokémon
+                p.mb-md-0.badge.badge-info
+                  i.icon-md.mdi.mdi-alert-box
+                  |&nbsp; #{msg}
+              .d-flex
+                i.mdi.mdi-home.text-muted.hover-cursor
+                p.text-muted.mb-0.hover-cursor  / Trang chủ / Quản lý / 
+                p.text-primary.mb-0.hover-cursor &nbsp;Pokémon
+            .d-flex.justify-content-between.align-items-end.flex-wrap
+              button.btn.btn-primary.mt-2.mt-xl-0.mr-2(data-toggle="modal" data-target="#create") Thêm Pokémon
+              button.btn.btn-primary.mt-2.mt-xl-0(data-toggle="modal" data-target="#createPP") Thả Pokémon vào bản đồ
+
+      .row
+        .col-md-12.grid-margin.stretch-card
+          .card
+            .card-body.dashboard-tabs.p-0
+              ul.nav.nav-tabs.px-4(role='tablist')
+                li.nav-item
+                  a#statistics-tab.nav-link.active(data-toggle='tab', href='#statistics', role='tab', aria-controls='overview', aria-selected='true') Thống kê
+                li.nav-item
+                  a#rank-tab.nav-link(data-toggle='tab', href='#rank', role='tab', aria-controls='overview', aria-selected='true') Pokémon HOT 
+              .tab-content.py-0.px-0
+                #statistics.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='overview-tab')
+                  .d-flex.flex-wrap.justify-content-xl-between
+                    .d-flex.border-md-right.flex-grow-1.align-items-center.justify-content-center.p-3.item
+                      i.mdi.mdi-duck.mr-3.icon-lg.text-danger
+                      .d-flex.flex-column.justify-content-around
+                        small.mb-1.text-muted Pokémon hiện có
+                        h5.mr-2.mb-0 #{pokemon_list.length}
+                    .d-flex.border-md-right.flex-grow-1.align-items-center.justify-content-center.p-3.item
+                      i.mdi.mdi-map.mr-3.icon-lg.text-success
+                      .d-flex.flex-column.justify-content-around
+                        small.mb-1.text-muted Pokémon trên bản đồ
+                        h5.mr-2.mb-0  #{pokemonPosition_list.length}
+                #rank.tab-pane.fade.show(role='tabpanel', aria-labelledby='overview-tab')
+                  - var rank = pokemonPosition_list;
+                  - rank.sort((a,b)=>{return b.characterlist.length-a.characterlist.length});
+                  .d-flex.flex-wrap.justify-content-xl-between
+                    .d-flex.border-md-right.flex-grow-1.align-items-center.justify-content-center.p-3.item
+                      //- i
+                      h4.mr-4=rank[0].pokeid.name
+                      img.mr-3(src=rank[0].pokeid.image.value, width="50px", height="50px")
+                      .d-flex.flex-column.justify-content-around
+                        small.mb-1.text-muted #1
+                        h5.mr-2.mb-0 #{rank[0].characterlist.length} lược bắt
+                    .d-flex.border-md-right.flex-grow-1.align-items-center.justify-content-center.p-3.item
+                      //- i.mdi.mdi-map.mr-3.icon-lg.text-success
+                      h4.mr-4=rank[1].pokeid.name
+                      img.mr-3(src=rank[1].pokeid.image.value, width="50px", height="50px")
+                      .d-flex.flex-column.justify-content-around
+                        small.mb-1.text-muted #2
+                        h5.mr-2.mb-0  #{rank[1].characterlist.length} lược bắt
+                    .d-flex.border-md-right.flex-grow-1.align-items-center.justify-content-center.p-3.item
+                      //- i.mdi.mdi-map.mr-3.icon-lg.text-success
+                      h4.mr-4=rank[2].pokeid.name
+                      img.mr-3(src=rank[2].pokeid.image.value, width="50px", height="50px")
+                      .d-flex.flex-column.justify-content-around
+                        small.mb-1.text-muted #3
+                        h5.mr-2.mb-0  #{rank[2].characterlist.length} lược bắt
+                          
+      //Pokemon hiện có trên sv    
+      .row
+        .col.grid-margin.stretch-card
+          .card
+            .card-body
+              h4.card-title Danh sách Pokémon
+              .table-responsive.clusterize-scroll
+                table#adminTable.table.table-hover
+                  thead
+                    tr
+                      th #
+                      th Hình ảnh
+                      th Tên Pokémon
+                      th Hệ chính
+                      th Mô tả
+                      th Thao tác
+                  tbody
+                    each e, index in pokemon_list 
+                      tr
+                        td= index+1
+                        td 
+                          img(src=e.image.value)
+                        td #{e.name}                
+                        td 
+                          img(src=e.type.value)               
+                        td.w-25
+                          details
+                            summary Click để xem
+                            p #{e.detail}
+                        td
+                          button.btn.btn-warning.mr-2(data-toggle="modal" data-target="#edit"+e._id)
+                            i.mdi.mdi-border-color
+                          //- button.btn.btn-danger(data-toggle="modal" data-target="#delete"+e._id)
+                          //-   i.mdi.mdi-delete
+
+      //Pokemon đang xuất hiện trên map 
+      .row
+        .col.grid-margin.stretch-card
+          .card
+            .card-body
+              h4.card-title Danh sách Pokémon xuất hiện trên bản đồ 
+              .table-responsive.clusterize-scroll
+                table#adminTable.table.table-hover
+                  thead
+                    tr
+                      th #
+                      th Hình ảnh
+                      th Tên Pokémon
+                      th Hệ chính
+                      th Vĩ độ
+                      th Kinh độ
+                      th Thời gian tồn tại
+                      th Thời gian xuất hiện
+                      th Thao tác
+                  tbody.clusterize-content
+                    each e, index in pokemonPosition_list 
+                      tr
+                        td= index+1
+                        td
+                          img(src=e.pokeid.image.value)
+                        td #{e.pokeid.name}            
+                        td 
+                          img(src=e.pokeid.type.value)    
+                        td #{e.xpos}             
+                        td #{e.ypos}
+                        td #{e.timeexist} phút
+                        td #{e.timeappear_formatted}
+                        td
+                          button.detail.btn.btn-primary.mr-2(data-toggle="modal" data-target="#catch" + e._id)
+                            i.mdi.mdi-note-text
+                          button.btn.btn-warning.mr-2(data-toggle="modal" data-target="#edit"+e._id)
+                            i.mdi.mdi-border-color
+                          button.btn.btn-danger(data-toggle="modal" data-target="#delete"+e._id)
+                            i.mdi.mdi-delete
+                        
+                      
+      footer.footer
+        .d-sm-flex.justify-content-center.justify-content-sm-between
+          span.text-muted.text-center.text-sm-left.d-block.d-sm-inline-block
+            | Copyright © 2018 
+            a(href='https://www.urbanui.com/', target='_blank') Urbanui
+            | . All rights reserved.
+          span.float-none.float-sm-right.d-block.mt-1.mt-sm-0.text-center
+            | Hand-crafted & made with 
+            i.mdi.mdi-heart.text-danger
+
+        script(src='/admin/vendor/base/vendor.bundle.base.js')
+        // endinject
+        // Plugin js for this page
+        script(src='/admin/vendor/chart.js/Chart.min.js')
+        script(src='/admin/vendor/datatables.net/jquery.dataTables.js')
+        script(src='/admin/vendor/datatables.net-bs4/dataTables.bootstrap4.js')
+        // End plugin js for this page
+        // inject:js
+        script(src='/admin/js/off-canvas.js')
+        script(src='/admin/js/hoverable-collapse.js')
+        script(src='/admin/js/template.js')
+        // endinject
+        // Custom js for this page
+        script(src='/admin/js/dashboard.js')
+        script(src='/admin/js/data-table.js')
+        script(src='/admin/js/jquery.dataTables.js')
+        script(src='/admin/js/dataTables.bootstrap4.js')
+        // End custom js for this page
+        link(href="https://cdnjs.cloudflare.com/ajax/libs/clusterize.js/0.18.0/clusterize.css" rel="stylesheet")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/clusterize.js/0.18.0/clusterize.js")
+        script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js")
+        script(src="/admin/js/pokemon.js")
+        script(src="https://momentjs.com/downloads/moment.js")
+
+        //MODAL========================================
+        //Modal cập nhật pokemon
+        each e in pokemon_list
+          .modal.fade(id="edit"+e._id, role='dialog')
+            .modal-dialog.modal-lg
+              // Modal content
+              .modal-content
+                .modal-header
+                  .display-3.modal-title.text-dark Cập nhật Pokémon
+                .modal-body.card-body
+                  form.forms-sample(method="POST", action="/admin/pokemon/"+e._id+"/update", enctype="multipart/form-data")
+                    .col-md.mr-2
+                      .form-group.row
+                        label.col-sm-3.col-form-label.badge.badge-warning Tên
+                        .col-sm-9
+                          input.form-control(type='text', name='name', value=e.name==undefined?'NULL':e.name)
+                    .col-md
+                      .form-group.row
+                        - var srcType;
+                        label.col-sm-3.col-form-label.badge.badge-warning Hệ chính
+                        .col-sm-8
+                          select(name="type" id="IdType"+e._id).form-control.typeSelect
+                            each type in type_list
+                              if (type._id.toString() == e.type._id.toString()) 
+                                - srcType = type.value;
+                                option(value=type._id, data=type.value, selected) #{type.name}
+                              else
+                                option(value=type._id, data=type.value) #{type.name}
+                        .col-sm-1.float-right.border.border-warning.rounded
+                          img(class="imgIdType"+e._id src=srcType width="45px")
+                    .col-md
+                      .form-group.row
+                        label.col-sm-3.col-form-label.badge.badge-warning.text-center Hình ảnh
+                        .col-sm-8
+                          select.form-control.imgSelect.mb-2(name="image" id="IdImg"+e._id)
+                            each i in image_list
+                              if (i._id.toString() == e.image._id.toString())
+                                option(value=i._id, data=i.value, selected) #{i.name}
+                              else
+                                option(value=i._id, data=i.value) #{i.name}
+                          .row
+                            .col-sm-3
+                              .form-check.form-check-warning
+                                label.form-check-label
+                                  input.switchUpload.form-check-input(id="switchIdImg"+e._id type='checkbox', name='switch')
+                                  | Upload ảnh
+                            .col
+                              input.inputImg.form-control(id="inputswitchIdImg"+e._id type='file', name='myFile', accept='image/*', style="display:none;")
+                        
+                        .col-sm-1.float-right.border.border-warning.rounded
+                          img.mb-2(class="imgIdImg"+e._id src=e.image.value width="45px" height="45px")
+                          img(id="imginputswitchIdImg"+e._id src=e.image.value width="45px" height="45px")
+
+                    .col-md.mr-2
+                      .form-group.row
+                        label.col.col-form-label.badge.badge-warning Mô tả
+                        textarea.form-control(type='text', name='detail', cols="30", rows="10") #{e.detail}
+                    .float-right
+                      button.btn.btn-primary.mr-2(type='submit') Xác nhận
+                      button.btn.btn-danger(type='button', data-dismiss='modal') Đóng
+
+        //Modal thêm pokemon
+        .modal.fade(id="create", role='dialog')
+          .modal-dialog.modal-lg
+            // Modal content
+            .modal-content
+              .modal-header
+                .display-3.modal-title.text-dark Thêm Pokémon
+              .modal-body.card-body
+                form.forms-sample(method="POST", action="/admin/pokemon/create", enctype="multipart/form-data")
+                  .col-md.mr-2
+                    .form-group.row
+                      label.col-sm-3.col-form-label.badge.badge-primary Tên
+                      .col-sm-9
+                        input.form-control(type='text', name='name', placeHolder="Tên Pokémon")
+                  .col-md
+                    .form-group.row
+                      - var srcTypeCreate=type_list[0].value;
+                      label.col-sm-3.col-form-label.badge.badge-primary Hệ chính
+                      .col-sm-8
+                        select(name="type").form-control.typeSelectCreate
+                          each type in type_list
+                            option(value=type._id, data=type.value) #{type.name}
+                      .col-sm-1.float-right.border.border-primary.rounded
+                        img#imgTypeCreate(src=srcTypeCreate width="45px")
+                  .col-md
+                    .form-group.row
+                      - var srcImgCreate = image_list[0].value;
+                      label.col-sm-3.col-form-label.badge.badge-primary Hình ảnh
+                      .col-sm-8
+                        input#inputImg.form-control(type='file', name='myFile', accept='image/*')
+                      .col-sm-1.float-right.border.border-primary.rounded
+                        img#imgImgCreate(src=srcImgCreate width="45px", height="45px")
+
+                  .col-md.mr-2
+                    .form-group.row
+                      label.col.col-form-label.badge.badge-primary Mô tả
+                      textarea.form-control(type='text', name='detail', cols="30", rows="10", placeholder="Pokémon này có gì đặc biệt?")
+                  .float-right
+                    button.btn.btn-primary.mr-2(type='submit') Xác nhận
+                    button.btn.btn-danger(type='button', data-dismiss='modal') Đóng
+
+        //modal cập nhật pokemon position
+        each e in pokemonPosition_list
+          .modal.fade(id="edit"+e._id, role='dialog')
+            .modal-dialog.modal-lg
+              // Modal content
+              .modal-content
+                .modal-header
+                  .display-3.modal-title.text-dark Cập nhật vị trí Pokémon
+                .modal-body.card-body
+                  form.forms-sample(method="POST", action="/admin/pokemonposition/"+e._id+"/update")
+                    .col-md
+                      .form-group.row
+                        label.col-sm-3.col-form-label.badge.badge-warning Pokémon
+                        .col-sm-8
+                          select.selectpokeidPP(name="pokeid" id="pokeidPP"+e._id).form-control.typeSelect
+                            - var srcPP;
+                            each p in pokemon_list
+                              if (p._id.toString() == e.pokeid._id.toString()) 
+                                -srcPP = p.image.value;
+                                option(value=p._id, selected, imageSrc=p.image.value) #{p.name}
+                              else
+                                option(value=p._id, imageSrc=p.image.value) #{p.name}
+                        .col-sm-1.float-right.border.border-warning.rounded
+                          img(class="imgpokeidPP"+e._id src=srcPP width="45px" height="45px")
+                    .col-md.mr-2
+                      .form-group.row
+                        label.col-sm-3.col-form-label.badge.badge-warning Vĩ độ
+                        .col-sm-9
+                          input.form-control(type='number', name='xpos', value=e.xpos==undefined?'NULL':e.xpos, step=0.000001, min=-85.000000, max=85.000000)
+                    .col-md.mr-2
+                      .form-group.row
+                        label.col-sm-3.col-form-label.badge.badge-warning Kinh độ
+                        .col-sm-9
+                          input.form-control(type='number', name='ypos', value=e.ypos==undefined?'NULL':e.ypos, step=0.000001, min=-180.000000, max=180.000000)
+                    .col-md.mr-2
+                      .form-group.row
+                        label.col-sm-3.col-form-label.badge.badge-warning Thời gian tồn tại (phút)
+                        .col-sm-9
+                          input.form-control(type='number', name='timeexist', value=e.timeexist==undefined?'NULL':e.timeexist, min=0)
+                    .col-md.mr-2
+                      .form-group.row
+                        label.col-sm-3.col-form-label.badge.badge-warning Thời gian xuất hiện
+                        .col-sm-5
+                          input.dateappear.form-control(id="date"+e._id type='datetime-local')
+                        .col-sm-4
+                          label.badge.badge-warning(id="showdate"+e._id)=e.timeappear_formatted==undefined?'NULL':e.timeappear_formatted
+                          input(type="text" name='timeappear' id="inputdate"+e._id style="display:none" value=e.timeappear==undefined?'NULL':e.timeappear)
+                    .float-right
+                      button.btn.btn-primary.mr-2(type='submit') Xác nhận
+                      button.btn.btn-danger(type='button', data-dismiss='modal') Đóng
+
+        //Modal ngưng thả pokemon
+        each e in pokemonPosition_list
+          .modal.fade(id="delete"+e._id, role='dialog')
+            .modal-dialog
+              // Modal content
+              .modal-content
+                .modal-header
+                  .display-3.modal-title.text-dark Thu hồi #{e.pokeid.name}
+                .modal-body.card-body
+                  h4 Bạn có chắc chắn muốn thu hồi "#{e.pokeid.name}"?
+                  p #{e.pokeid.name} sẽ không xuất hiện cho đến khi được thả lại. Hãy chắc chắn bạn muốn làm điều này. 
+                  form.forms-sample(method="POST", action="/admin/pokemonposition/"+e._id+"/delete")
+                    .float-right
+                      button.btn.btn-danger.mr-2(type='submit') Xác nhận
+                      button.btn.btn-primary(type='button', data-dismiss='modal') Đóng
+
+        //modal thả pokemon position
+        .modal.fade(id="createPP", role='dialog')
+          .modal-dialog.modal-lg
+            // Modal content
+            .modal-content
+              .modal-header
+                .display-3.modal-title.text-dark Thả Pokémon
+              .modal-body.card-body
+                form.forms-sample(method="POST", action="/admin/pokemonposition/create")
+                  .col-md
+                    .form-group.row
+                      label.col-sm-3.col-form-label.badge.badge-primary Pokémon
+                      .col-sm-8
+                        select#selectCreatePP(name="pokeid").form-control.typeSelect
+                          each p in pokemon_list
+                            option(value=p._id imageSrc=p.image.value) #{p.name}
+                      .col-sm-1.float-right.border.border-primary.rounded
+                        img#imgcreatePP(src=pokemon_list[0].image.value width="45px" height="45px")
+                  .col-md.mr-2
+                    .form-group.row
+                      label.col-sm-3.col-form-label.badge.badge-primary Vĩ độ
+                      .col-sm-7
+                        input.form-control(type='number', name='xpos', value="0.000000", step=0.000001, min=-85.000000, max=85.000000)
+                      .col-sm-2
+                        button#randomxposPP.btn.btn-primary(type='button') Tạo ngẫu nhiên
+                  .col-md.mr-2
+                    .form-group.row
+                      label.col-sm-3.col-form-label.badge.badge-primary Kinh độ
+                      .col-sm-7
+                        input.form-control(type='number', name='ypos', value="0.000000", step=0.000001, min=-180.000000, max=180.000000)
+                      .col-sm-2
+                        button#randomyposPP.btn.btn-primary(type='button') Tạo ngẫu nhiên
+                  .col-md.mr-2
+                    .form-group.row
+                      label.col-sm-3.col-form-label.badge.badge-primary Thời gian tồn tại (phút)
+                      .col-sm-9
+                        input.form-control(type='number', name='timeexist', value="20", step=1, min=1)
+                  .col-md.mr-2
+                    .form-group.row
+                      label.col-sm-3.col-form-label.badge.badge-primary Thời gian xuất hiện
+                      .col-sm-5
+                        input.form-control(id="createdate" type='datetime-local')
+                      .col-sm-4
+                        label.badge.badge-primary(id="showcreatedate") Invalid
+                        input(type="text" name='timeappear' id="inputcreatedate" style="display:none" value=new Date())
+                  .float-right
+                    button.btn.btn-primary.mr-2(type='submit') Xác nhận
+                    button.btn.btn-danger(type='button', data-dismiss='modal') Đóng
+
+        // Modal chi tiết danh sách nhân vật bắt pokemon này
+        each e in pokemonPosition_list
+          .modal.fade(id="catch"+e._id, role='dialog')
+            .modal-dialog.modal-lg
+              // Modal content
+              .modal-content
+                .modal-header
+                  .display-2.modal-title.text-dark Lịch sử bắt
+                .modal-body
+                  .row
+                    .col.grid-margin.stretch-card
+                      .card
+                        .card-body
+                          h4.card-title Danh sách người chơi đã bắt "#{e.pokeid.name}"
+                          .table-responsive.clusterize-scroll
+                            table.table.table-hover
+                              thead
+                                tr                   
+                                  th #                 
+                                  th Người chơi
+                                  th Thời gian                                    
+                              tbody
+                                if e.characterlist.length > 0                         
+                                  each user, index in e.characterlist
+                                    tr
+                                      td #{index + 1}
+                                      td #{user.characterid.name}
+                                      td #{e.date_formatted[index]}                                                 
+                .modal-footer
+                  button.btn.btn-primary.btn-block(type='button', data-dismiss='modal') Đóng   

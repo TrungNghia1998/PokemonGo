@@ -1,0 +1,290 @@
+extends layout
+block content
+  .main-panel
+    .content-wrapper
+      .row
+        .col-md-12.grid-margin
+          .d-flex.justify-content-between.flex-wrap
+            .d-flex.align-items-end.flex-wrap
+              .mr-md-3.mr-xl-5
+                h2 Quản lý Pokéstop
+                p.mb-md-0.badge.badge-info
+                  i.icon-md.mdi.mdi-alert-box
+                  |&nbsp; #{msg}
+              .d-flex
+                i.mdi.mdi-home.text-muted.hover-cursor
+                p.text-muted.mb-0.hover-cursor  / Trang chủ / Quản lý / 
+                p.text-primary.mb-0.hover-cursor &nbsp;Pokéstop
+            .d-flex.justify-content-between.align-items-end.flex-wrap
+              button.btn.btn-primary.mt-2.mt-xl-0.mr-2(data-toggle="modal" data-target="#create") Thêm Pokéstop
+
+      .row
+        .col-md-12.grid-margin.stretch-card
+          .card
+            .card-body.dashboard-tabs.p-0
+              ul.nav.nav-tabs.px-4(role='tablist')
+                li.nav-item
+                  a#rank-tab.nav-link.active(data-toggle='tab', href='#rank', role='tab', aria-controls='overview', aria-selected='true') Top Pokéstop 
+              .tab-content.py-0.px-0
+                #rank.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='overview-tab')
+                  - var rank = pokestop_list;
+                  - rank.sort((a,b)=>{return b.spinCount-a.spinCount});
+                  .d-flex.flex-wrap.justify-content-xl-between
+                    .d-flex.border-md-right.flex-grow-1.align-items-center.justify-content-center.p-3.item.col-sm-4
+                      //- i
+                      h4.mr-4.w-50=rank[0].name
+                      img.mr-3(src=rank[0].image, width="50px", height="50px")
+                      .d-flex.flex-column.justify-content-around
+                        small.mb-1.text-muted #1
+                        h5.mr-2.mb-0 #{rank[0].spinCount} lược quay
+                    .d-flex.border-md-right.flex-grow-1.align-items-center.justify-content-center.p-3.item.col-sm-4
+                      //- i.mdi.mdi-map.mr-3.icon-lg.text-success
+                      h4.mr-4.w-50=rank[1].name
+                      img.mr-3(src=rank[1].image, width="50px", height="50px")
+                      .d-flex.flex-column.justify-content-around
+                        small.mb-1.text-muted #2
+                        h5.mr-2.mb-0  #{rank[1].spinCount} lược quay
+                    .d-flex.border-md-right.flex-grow-1.align-items-center.justify-content-center.p-3.item.col-sm-4
+                      //- i.mdi.mdi-map.mr-3.icon-lg.text-success
+                      h4.mr-4.w-50=rank[2].name
+                      img.mr-3(src=rank[2].image, width="50px", height="50px")
+                      .d-flex.flex-column.justify-content-around
+                        small.mb-1.text-muted #3
+                        h5.mr-2.mb-0  #{rank[2].spinCount} lược quay
+                          
+      //Pokemon hiện có trên sv    
+      .row
+        .col.grid-margin.stretch-card
+          .card
+            .card-body
+              h4.card-title Danh sách Pokéstop
+              .table-responsive.clusterize-scroll
+                table#adminTable.table.table-hover
+                  thead
+                    tr
+                      th #
+                      th Hình ảnh
+                      th Tên Pokéstop
+                      th Vĩ độ
+                      th Kinh độ
+                      th Mô tả
+                      th Trạng thái
+                      th Thao tác
+                  tbody
+                    each e, index in pokestop_list 
+                      tr
+                        td= index+1
+                        td 
+                          img(src=e.image==undefined?'':e.image)
+                        td.w-25 #{e.name==undefined?"NULL":e.name}                
+                        td #{e.xpos}
+                        td #{e.ypos}              
+                        td.w-5
+                          details
+                            summary Click để xem
+                            p #{e.detail}
+                        td
+                          if e.status==true
+                            label.badge.badge-success Hoạt động - Lượt quay: #{e.spinCount}
+                          else
+                            label.badge.badge-danger Bị khóa - Lượt quay: #{e.spinCount}
+                        td
+                          button.btn.btn-warning.mr-2.px-2(data-toggle="modal" data-target="#edit"+e._id)
+                            i.mdi.mdi-border-color
+                          if e.status==true
+                            button.btn.btn-danger.px-2(data-toggle="modal" data-target="#lock"+e._id)
+                              i.mdi.mdi-lock
+                          else
+                            button.btn.btn-success.px-2(data-toggle="modal" data-target="#unlock"+e._id)
+                              i.mdi.mdi-lock-open
+                      
+      footer.footer
+        .d-sm-flex.justify-content-center.justify-content-sm-between
+          span.text-muted.text-center.text-sm-left.d-block.d-sm-inline-block
+            | Copyright © 2018 
+            a(href='https://www.urbanui.com/', target='_blank') Urbanui
+            | . All rights reserved.
+          span.float-none.float-sm-right.d-block.mt-1.mt-sm-0.text-center
+            | Hand-crafted & made with 
+            i.mdi.mdi-heart.text-danger
+
+        script(src='/admin/vendor/base/vendor.bundle.base.js')
+        // endinject
+        // Plugin js for this page
+        script(src='/admin/vendor/chart.js/Chart.min.js')
+        script(src='/admin/vendor/datatables.net/jquery.dataTables.js')
+        script(src='/admin/vendor/datatables.net-bs4/dataTables.bootstrap4.js')
+        // End plugin js for this page
+        // inject:js
+        script(src='/admin/js/off-canvas.js')
+        script(src='/admin/js/hoverable-collapse.js')
+        script(src='/admin/js/template.js')
+        // endinject
+        // Custom js for this page
+        script(src='/admin/js/dashboard.js')
+        script(src='/admin/js/data-table.js')
+        script(src='/admin/js/jquery.dataTables.js')
+        script(src='/admin/js/dataTables.bootstrap4.js')
+        // End custom js for this page
+        link(href="https://cdnjs.cloudflare.com/ajax/libs/clusterize.js/0.18.0/clusterize.css" rel="stylesheet")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/clusterize.js/0.18.0/clusterize.js")
+        script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js")
+        script(src="/admin/js/pokestop.js")
+        script(src="https://momentjs.com/downloads/moment.js")
+        script(async defer type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEHnr26FuYpc2KjXhuJ36jrvSbCNC5mAg&libraries=places")
+        #map
+
+
+        //MODAL========================================
+        //Modal thêm pokestop
+        #create.modal.fade(role='dialog')
+          .modal-dialog.modal-lg
+            // Modal content
+            .modal-content
+              .modal-header
+                .display-3.modal-title.text-dark Thêm Pokéstop
+              .modal-body.card-body
+                form.form-group(method="POST", action="/admin/pokestop/create")
+                  .col-md.px-2.mb-2
+                    .row
+                      label.col-sm-2.col-form-label.badge.badge-primary.mr-2 Tên Pokéstop
+                      input#name.col-sm.form-control(type='text', name='name', placeHolder="Tên Pokéstop")
+                  .row.px-2
+                    .col-md.mr-2.mb-2
+                      .row
+                        label.col-sm-2.col-form-label.badge.badge-primary.mr-2 Vĩ độ
+                        input#xpos.col-sm.form-control(type='number', name='xpos', value="0.000000", step=0.000001, min=-85.000000, max=85.000000)
+                    .col-md.mr-2.mb-2
+                      .row
+                        label.col-sm-2.col-form-label.badge.badge-primary.mr-2 Kinh độ
+                        input#ypos.col-sm.form-control(type='number', name='ypos', value="0.000000", step=0.000001, min=-180.000000, max=180.000000)
+                  .col-md.px-2.mb-2
+                    .row
+                      label.col-sm-2.col-form-label.badge.badge-primary.mr-2 URL ảnh nền
+                      input#image.col-sm.form-control(type='text', name='image', placeHolder="https://poondeptrai.hinhnen")
+                  .col-md.px-2
+                    .form-group.row
+                      label.col-sm.col-form-label.badge.badge-primary Mô tả
+                      textarea#mota.form-control(type='text', name='detail', cols="30", rows="5", placeholder="Pokéstop này có gì đặc biệt?")
+                  
+                  .col-md.px-2.text-right
+                    label.col-sm-2.col-form-label.badge.badge-primary.float-left.mr-3 Trạng thái
+                    .form-check.form-check-success.float-left.mr-3
+                      label.form-check-label
+                        input.form-check-input(type='radio', name='status', value='true', checked)
+                        |                                 Hoạt động
+                    .form-check.form-check-danger.float-left
+                      label.form-check-label
+                        input.form-check-input(type='radio', name='status', value='false')
+                        |                                 Khóa
+
+                    button.btn.btn-primary.mr-2(type='submit') Xác nhận
+                    button.btn.btn-danger(type='button', data-dismiss='modal') Đóng
+                  hr
+                  p.badge.badge-warning Không biết nhập gì? Sợt địa điểm ngay :)
+                  .col-md.px-2.mb-3
+                    .input-group
+                      input.form-control(type='text', name='search', placeHolder="Tìm kiếm địa điểm")
+                      .input-group-append
+                        button#search.btn.btn-outline-success(type="button") Tìm
+                  label.col.col-form-label.badge.badge-success Kết quả tìm kiếm
+                  ul#searchResults.list-group.h-25
+
+
+        //Modal cập nhật pokestop
+        each e in pokestop_list
+          .modaledit.modal.fade(id="edit"+e._id role='dialog')
+            .modal-dialog.modal-lg
+              // Modal content
+              .modal-content
+                .modal-header
+                  .display-3.modal-title.text-dark Cập nhật Pokéstop
+                .modal-body.card-body
+                  form.form-group(method="POST", action="/admin/pokestop/"+e._id+"/update")
+                    .col-md.px-2.mb-2
+                      .row
+                        label.col-sm-2.col-form-label.badge.badge-warning.mr-2 Tên Pokéstop
+                        input.col-sm.form-control(type='text', name='name', placeHolder="Tên Pokéstop", value=e.name==undefined?'NULL':e.name)
+                    .row.px-2
+                      .col-md.mr-2.mb-2
+                        .row
+                          label.col-sm-2.col-form-label.badge.badge-warning.mr-2 Vĩ độ
+                          input.col-sm.form-control(type='number', name='xpos', step=0.000001, min=-85.000000, max=85.000000, value=e.xpos==undefined?"0.000000":e.xpos)
+                      .col-md.mr-2.mb-2
+                        .row
+                          label.col-sm-2.col-form-label.badge.badge-warning.mr-2 Kinh độ
+                          input.col-sm.form-control(type='number', name='ypos', step=0.000001, min=-180.000000, max=180.000000, value=e.ypos==undefined?"0.000000":e.ypos)
+                    .col-md.px-2.mb-2
+                      .row
+                        label.col-sm-2.col-form-label.badge.badge-warning.mr-2 URL ảnh nền
+                        input.col-sm.form-control(type='text', name='image', placeHolder="https://poondeptrai.hinhnen", value=e.image==undefined?'NULL':e.image)
+                    .col-md.px-2
+                      .form-group.row
+                        label.col-sm.col-form-label.badge.badge-warning Mô tả
+                        textarea.form-control(type='text', name='detail', cols="30", rows="5", placeholder="Pokéstop này có gì đặc biệt?")=e.detail==undefined?'NULL':e.detail
+                    
+                    .col-md.px-2.text-right
+                      label.col-sm-2.col-form-label.badge.badge-warning.float-left.mr-3 Trạng thái
+                      if e.status == true
+                        .form-check.form-check-success.float-left.mr-3
+                          label.form-check-label
+                            input.form-check-input(type='radio', name='status', value='true', checked)
+                            |                                 Hoạt động
+                        .form-check.form-check-danger.float-left
+                          label.form-check-label
+                            input.form-check-input(type='radio', name='status', value='false')
+                            |                                 Khóa
+                      else
+                        .form-check.form-check-success.float-left.mr-3
+                          label.form-check-label
+                            input.form-check-input(type='radio', name='status', value='true')
+                            |                                 Hoạt động
+                        .form-check.form-check-danger.float-left
+                          label.form-check-label
+                            input.form-check-input(type='radio', name='status', value='false', checked)
+                            |                                 Khóa
+                      button.btn.btn-primary.mr-2(type='submit') Xác nhận
+                      button.btn.btn-danger(type='button', data-dismiss='modal') Đóng
+                    hr
+                    p.badge.badge-warning Không biết nhập gì? Sợt địa điểm ngay :)
+                    .col-md.px-2.mb-3
+                      .input-group
+                        input.form-control(type='text', name='search', placeHolder="Tìm kiếm địa điểm")
+                        .input-group-append
+                          button.search.btn.btn-outline-success(id='sbedit'+e._id type="button") Tìm
+                    label.col.col-form-label.badge.badge-success Kết quả tìm kiếm
+                    ul.list-group.h-25(id='sredit'+e._id)
+
+        //Modal khóa pokestop
+        each e in pokestop_list
+          .modal.fade(id="lock"+e._id, role='dialog')
+            .modal-dialog.modal-lg
+              // Modal content
+              .modal-content
+                .modal-header
+                  .display-3.modal-title.text-dark Khóa Pokéstop
+                .modal-body.card-body
+                  h4 Bạn có chắc chắn muốn khóa pokéstop "#{e.name}"?
+                  p #{e.name} sẽ không xuất hiện trên bản đồ cho đến khi được mở lại. Hãy chắc chắn bạn muốn làm điều này. 
+                  form.forms-sample(method="POST", action="/admin/pokestop/"+e._id+"/lock")
+                    .float-right
+                      button.btn.btn-danger.mr-2(type='submit') Xác nhận
+                      button.btn.btn-primary(type='button', data-dismiss='modal') Đóng
+
+        //Modal mở khóa pokestop
+        each e in pokestop_list
+          .modal.fade(id="unlock"+e._id, role='dialog')
+            .modal-dialog.modal-lg
+              // Modal content
+              .modal-content
+                .modal-header
+                  .display-3.modal-title.text-dark Mở khóa pokéstop
+                .modal-body.card-body
+                  h4 Bạn có chắc chắn muốn mở khóa pokéstop "#{e.name}"?
+                  p #{e.name} sẽ xuất hiện trên bản đồ cho đến khi được khóa lại. Hãy chắc chắn bạn muốn làm điều này. 
+                  form.forms-sample(method="POST", action="/admin/pokestop/"+e._id+"/unlock")
+                    .float-right
+                      button.btn.btn-danger.mr-2(type='submit') Xác nhận
+                      button.btn.btn-primary(type='button', data-dismiss='modal') Đóng     
+
+        
